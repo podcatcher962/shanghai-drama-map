@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lay="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跟着电视剧游上海 ·《轧戏》取景地打卡指南</title>
+<script src="https://webapi.amap.com/loader.js"></script>
+<style>
+:root{
+  --bg:#121418; --panel:#1A1D23; --panel2:#21252D; --panel3:#262B34;
+  --line:#2E333C; --line2:#3A414C;
+  --tx:#EDEAE4; --tx2:#A8A49B; --tx3:#76726B;
+  --gold:#E3B563; --gold2:#F5D48A;
+  --t1:#FF8A5C; --t2:#9D7CFF; --t3:#4ECDC4; --t4:#F2C94C;
+  --danger:#E2685F;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--tx);
+  font:14px/1.65 "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  display:flex;flex-direction:column;overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+a{color:var(--gold);text-decoration:none}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#333944;border-radius:4px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- 顶栏 ---------- */
+#top{
+  flex:0 0 auto;height:56px;display:flex;align-items:center;gap:14px;
+  padding:0 16px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#1B1F26,#161920);
+  position:relative;z-index:40;
+}
+#top .brand{display:flex;align-items:center;gap:11px;min-width:0}
+#top .logo{width:34px;height:34px;flex:0 0 auto}
+#top .t1{font-size:16.5px;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+#top .t1 b{color:var(--gold);font-weight:700}
+#top .t2{font-size:11.5px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#top .acts{margin-left:auto;display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.tbtn{
+  height:34px;padding:0 13px;border-radius:8px;border:1px solid var(--line2);
+  background:var(--panel2);color:var(--tx);font-size:13px;display:inline-flex;align-items:center;gap:6px;
+  transition:border-color .15s,background .15s;white-space:nowrap;
+}
+.tbtn:hover{border-color:var(--gold);color:var(--gold2)}
+.tbtn.primary{background:linear-gradient(180deg,#E9C173,#D9A447);color:#1B1C1F;border-color:#D9A447;font-weight:600}
+.tbtn.primary:hover{color:#1B1C1F;filter:brightness(1.07)}
+.tbtn svg{width:15px;height:15px;flex:0 0 auto}
+
+/* ---------- 主体 ---------- */
+#main{flex:1;display:flex;min-height:0;position:relative}
+
+/* ---------- 左侧栏 ---------- */
+#side{
+  width:412px;flex:0 0 412px;display:flex;flex-direction:column;min-height:0;
+  background:var(--panel);border-right:1px solid var(--line);position:relative;z-index:20;
+}
+#side .scroll{flex:1;overflow-y:auto;min-height:0;overscroll-behavior:contain}
+
+/* 剧名卡片 */
+.drama{padding:18px 18px 0;position:relative}
+.drama .dtop{display:flex;align-items:flex-end;gap:12px}
+.drama .dname{
+  font-family:"STSong","SimSun","Noto Serif SC",Georgia,serif;
+  font-size:44px;font-weight:700;letter-spacing:.18em;line-height:1;
+  background:linear-gradient(180deg,#F7E3B4,#D9A447 70%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 26px rgba(227,181,99,.18);
+}
+.drama .den{font-size:11px;color:var(--tx3);letter-spacing:.24em;text-transform:uppercase;padding-bottom:5px}
+.drama .dtags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 9px}
+.drama .dtags span{
+  font-size:11px;color:var(--gold2);border:1px solid rgba(227,181,99,.38);
+  background:rgba(227,181,99,.08);border-radius:99px;padding:2px 9px;letter-spacing:.04em;
+}
+.drama .dmeta{font-size:12px;color:var(--tx2);line-height:1.8}
+.drama .dmeta b{color:var(--tx);font-weight:600}
+.drama .dsum{
+  font-size:12.5px;color:var(--tx2);margin:10px 0 0;line-height:1.85;
+  border-left:2px solid var(--gold);padding-left:10px;
+}
+.drama .dcamp{
+  margin-top:11px;font-size:11.5px;color:#CFE8DF;background:rgba(78,205,196,.09);
+  border:1px solid rgba(78,205,196,.3);border-radius:8px;padding:7px 10px;line-height:1.6;
+}
+.drama .sky{display:block;width:100%;height:64px;margin-top:6px}
+
+/* 分组筛选 */
+.chipwrap{padding:14px 16px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:5}
+.chipwrap .clab{font-size:11px;color:var(--tx3);letter-spacing:.14em;margin-bottom:8px}
+.chips{display:grid;gap:6px;grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
+.chip{
+  border:1px solid var(--line2);background:var(--panel2);border-radius:8px;
+  padding:6px 8px;font-size:12px;color:var(--tx2);text-align:center;line-height:1.45;
+  transition:all .15s;min-height:38px;display:flex;flex-direction:column;justify-content:center;
+}
+.chip i{font-style:normal;font-size:10.5px;color:var(--tx3);display:block}
+.chip:hover{border-color:var(--tx3);color:var(--tx)}
+.chip.on{color:#15171B;font-weight:600;border-color:transparent}
+.chip.on i{color:rgba(21,23,27,.65)}
+.chip .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
+
+/* 点位列表 */
+.grp{
+  display:flex;align-items:center;gap:8px;padding:13px 16px 7px;
+  font-size:12.5px;font-weight:600;color:var(--tx);letter-spacing:.05em;
+}
+.grp .bar{width:3px;height:14px;border-radius:2px;background:var(--c)}
+.grp .cnt{font-size:11px;color:var(--tx3);font-weight:400}
+.grp .gdesc{font-size:10.5px;color:var(--tx3);font-weight:400;margin-left:auto}
+.pt{
+  display:flex;gap:11px;padding:11px 16px 12px;cursor:pointer;position:relative;
+  border-bottom:1px solid rgba(46,51,60,.55);transition:background .15s;
+}
+.pt:hover{background:var(--panel2)}
+.pt.on{background:linear-gradient(90deg,rgba(227,181,99,.13),rgba(227,181,99,.03))}
+.pt.on::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold)}
+.pt .num{
+  flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#15171B;background:var(--c);
+  box-shadow:0 2px 8px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.22);
+  font-family:Georgia,serif;
+}
+.pt .body{min-width:0;flex:1}
+.pt .nm{font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.pt .nm .src{font-size:10px;font-weight:400;color:var(--tx3);border:1px solid var(--line2);border-radius:4px;padding:0 5px;line-height:16px}
+.pt .nm .src.official{color:#9FD9CB;border-color:rgba(78,205,196,.4)}
+.pt .nm .src.media{color:#C9B4F5;border-color:rgba(157,124,255,.4)}
+.pt .ad{font-size:11.5px;color:var(--tx3);margin:2px 0 5px;display:flex;align-items:center;gap:5px}
+.pt .ad svg{width:11px;height:11px;flex:0 0 auto;opacity:.75}
+.pt .st{font-size:12px;color:var(--tx2);line-height:1.75}
+.pt .tp{
+  font-size:11.5px;color:#D8C9A8;margin-top:6px;line-height:1.7;
+  background:rgba(227,181,99,.07);border:1px dashed rgba(227,181,99,.3);
+  border-radius:7px;padding:5px 9px;display:flex;gap:6px;
+}
+.pt .tp svg{width:12px;height:12px;flex:0 0 auto;margin-top:3px}
+.pt .tp b{color:var(--gold2);font-weight:600}
+
+/* 侧栏底 */
+.sfoot{
+  flex:0 0 auto;padding:10px 16px 12px;border-top:1px solid var(--line);
+  font-size:10.5px;color:var(--tx3);line-height:1.8;background:var(--panel);
+}
+.sfoot .fl{display:flex;gap:10px;margin-bottom:5px}
+.sfoot .fl button{font-size:10.5px;color:var(--tx2);text-decoration:underline;text-underline-offset:3px}
+.sfoot .fl button:hover{color:var(--gold2)}
+
+/* ---------- 右侧地图 ---------- */
+#stage{flex:1;position:relative;min-width:0;background:#0C0E12}
+#map{position:absolute;inset:0}
+#tools{
+  position:absolute;top:14px;right:14px;z-index:15;display:flex;flex-direction:column;gap:8px;align-items:flex-end;
+}
+.mbtn{
+  height:38px;padding:0 14px;border-radius:10px;background:rgba(26,29,35,.92);
+  border:1px solid var(--line2);color:var(--tx);font-size:13px;
+  display:inline-flex;align-items:center;gap:7px;backdrop-filter:blur(6px);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);transition:all .15s;white-space:nowrap;
+}
+.mbtn svg{width:15px;height:15px}
+.mbtn:hover{border-color:var(--gold);color:var(--gold2)}
+.mbtn.on{background:linear-gradient(180deg,#E9C173,#D9A447);color:#1B1C1F;border-color:#D9A447;font-weight:600}
+.mbtn.on:hover{color:#1B1C1F}
+#legend{
+  position:absolute;left:14px;bottom:14px;z-index:15;background:rgba(26,29,35,.9);
+  border:1px solid var(--line2);border-radius:10px;padding:9px 12px;backdrop-filter:blur(6px);
+  font-size:11.5px;color:var(--tx2);display:flex;flex-direction:column;gap:5px;box-shadow:0 4px 16px rgba(0,0,0,.4);
+}
+#legend .li{display:flex;align-items:center;gap:7px}
+#legend .sw{width:9px;height:9px;border-radius:3px;background:var(--c)}
+#tourpill{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:16;
+  display:none;align-items:center;gap:11px;background:rgba(26,29,35,.94);
+  border:1px solid var(--gold);border-radius:99px;padding:7px 8px 7px 16px;
+  font-size:13px;color:var(--gold2);box-shadow:0 6px 24px rgba(0,0,0,.5);backdrop-filter:blur(6px);
+  max-width:min(520px,86%);
+}
+#tourpill .tt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tourpill .stop{
+  background:var(--danger);color:#fff;border-radius:99px;height:26px;padding:0 12px;font-size:12px;flex:0 0 auto;
+}
+#btnList{display:none}
+#maperr{
+  position:absolute;inset:0;z-index:12;display:none;align-items:center;justify-content:center;
+  background:rgba(12,14,18,.92);padding:24px;text-align:center;
+}
+#maperr .box{max-width:420px}
+#maperr h3{color:var(--gold2);font-size:16px;margin:0 0 10px}
+#maperr p{color:var(--tx2);font-size:13px;line-height:1.9;margin:0}
+
+/* 信息窗 */
+.iw{
+  --c:var(--gold);
+  width:min(304px,74vw);background:rgba(24,27,33,.97);border:1px solid var(--line2);
+  border-radius:12px;padding:13px 14px 11px;color:var(--tx);position:relative;
+  box-shadow:0 10px 34px rgba(0,0,0,.55);font-size:12.5px;line-height:1.7;
+}
+.iw::after{
+  content:"";position:absolute;left:50%;bottom:-6px;width:11px;height:11px;
+  background:rgba(24,27,33,.97);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);
+  transform:translateX(-50%) rotate(45deg);
+}
+.iw .iwh{display:flex;align-items:center;gap:9px;margin-bottom:3px}
+.iw .iwn{
+  width:24px;height:24px;border-radius:7px;background:var(--c);color:#15171B;
+  font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+  font-family:Georgia,serif;
+}
+.iw .iwt{font-size:14.5px;font-weight:700;line-height:1.3}
+.iw .iwa{font-size:11px;color:var(--tx3);margin-bottom:7px}
+.iw .iws{color:var(--tx2);font-size:12px}
+.iw .iwp{
+  margin-top:7px;font-size:11.5px;color:#D8C9A8;background:rgba(227,181,99,.08);
+  border:1px dashed rgba(227,181,99,.32);border-radius:7px;padding:5px 9px;line-height:1.65;
+}
+.iw .iwb{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.iw .iwb a,.iw .iwb button{
+  font-size:11.5px;height:27px;padding:0 10px;border-radius:7px;display:inline-flex;align-items:center;gap:4px;
+  border:1px solid var(--line2);background:var(--panel3);color:var(--tx);
+}
+.iw .iwb a.nav{background:linear-gradient(180deg,#E9C173,#D9A447);color:#1B1C1F;border-color:#D9A447;font-weight:600}
+.iw .iwb a:hover,.iw .iwb button:hover{border-color:var(--gold)}
+.iw .iwx{
+  position:absolute;top:6px;right:7px;width:22px;height:22px;border-radius:6px;
+  color:var(--tx3);font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;
+}
+.iw .iwx:hover{color:var(--tx);background:var(--panel3)}
+
+/* toast */
+#toast{
+  position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(16px);z-index:99;
+  background:rgba(26,29,35,.96);border:1px solid var(--gold);color:var(--gold2);
+  border-radius:99px;padding:8px 18px;font-size:13px;opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;box-shadow:0 8px 28px rgba(0,0,0,.5);max-width:86vw;
+}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- 弹层 ---------- */
+.mask{
+  position:fixed;inset:0;z-index:90;background:rgba(8,9,12,.72);backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.mask.on{display:flex}
+.dlg{
+  background:var(--panel);border:1px solid var(--line2);border-radius:16px;
+  width:min(560px,94vw);max-height:min(86vh,760px);display:flex;flex-direction:column;
+  box-shadow:0 24px 70px rgba(0,0,0,.6);overflow:hidden;
+}
+.dlg .dh{
+  flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:15px 18px;
+  border-bottom:1px solid var(--line);font-size:15.5px;font-weight:700;
+}
+.dlg .dh .x{margin-left:auto;width:30px;height:30px;border-radius:8px;color:var(--tx2);font-size:17px;
+  display:flex;align-items:center;justify-content:center}
+.dlg .dh .x:hover{color:var(--tx);background:var(--panel3)}
+.dlg .db{overflow-y:auto;padding:18px;font-size:13px;color:var(--tx2);line-height:1.95;min-height:0}
+.dlg .db h4{color:var(--tx);font-size:13.5px;margin:16px 0 6px}
+.dlg .db h4:first-child{margin-top:0}
+.dlg .db p{margin:0 0 8px}
+.dlg .db ol,.dlg .db ul{margin:0 0 8px;padding-left:20px}
+.dlg .db li{margin-bottom:5px}
+.dlg .db b{color:var(--tx)}
+.dlg .db .gold{color:var(--gold2)}
+
+/* 二维码弹层 */
+#mQR .dlg{width:min(430px,94vw)}
+.qrwrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.qrcard{
+  background:#fff;border-radius:14px;padding:14px;box-shadow:0 10px 34px rgba(0,0,0,.5);
+}
+.qrcard svg{display:block;width:272px;height:272px}
+.qrcap{font-size:12px;color:var(--tx2);text-align:center;line-height:1.8}
+.qrurl{
+  width:100%;background:var(--panel2);border:1px solid var(--line2);border-radius:8px;
+  padding:8px 10px;font-size:10.5px;color:var(--tx3);word-break:break-all;line-height:1.6;
+  max-height:64px;overflow-y:auto;font-family:Consolas,Menlo,monospace;
+}
+.qrsteps{display:flex;flex-direction:column;gap:7px;width:100%}
+.qrsteps .s{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--tx2);line-height:1.7}
+.qrsteps .s i{
+  flex:0 0 auto;width:19px;height:19px;border-radius:50%;background:var(--panel3);color:var(--gold2);
+  font-style:normal;font-size:11px;display:flex;align-items:center;justify-content:center;margin-top:2px;
+  border:1px solid var(--line2);
+}
+.qrsteps .s b{color:var(--tx)}
+
+/* 地图 pin 覆盖物（高德 DOM Marker） */
+.mpin{position:relative;width:30px;height:38px;transform-origin:50% 100%;cursor:pointer}
+.mpin svg{display:block;width:100%;height:100%;filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+.mpin.b{width:36px;height:46px;animation:pinpop .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pinpop{0%{transform:scale(.55)}70%{transform:scale(1.14)}100%{transform:scale(1)}}
+.mpdot{position:relative;width:20px;height:20px;cursor:pointer}
+.mpdot svg{display:block;width:100%;height:100%}
+
+/* ---------- 窄屏 / 手机版式 ---------- */
+@media (max-width:900px){
+  html:not([data-lay="l"]) #top{height:50px;padding:0 11px;gap:9px}
+  html:not([data-lay="l"]) #top .t2{display:none}
+  html:not([data-lay="l"]) #top .t1{font-size:14.5px}
+  html:not([data-lay="l"]) #top .logo{width:28px;height:28px}
+  html:not([data-lay="l"]) #top .acts .lt{display:none}
+  html:not([data-lay="l"]) .tbtn{height:32px;padding:0 9px;font-size:12px}
+  html:not([data-lay="l"]) #side{
+    position:absolute;left:0;top:0;bottom:0;width:min(400px,88%);flex:none;
+    transform:translateX(-103%);transition:transform .28s ease;z-index:35;
+    box-shadow:14px 0 44px rgba(0,0,0,.55);border-right:1px solid var(--line2);
+  }
+  html:not([data-lay="l"]) #side.open{transform:none}
+  html:not([data-lay="l"]) #btnList{display:inline-flex}
+  html:not([data-lay="l"]) #legend{display:none}
+  html:not([data-lay="l"]) .drama .dname{font-size:36px}
+  html:not([data-lay="l"]) .mbtn{height:34px;padding:0 11px;font-size:12px}
+  html:not([data-lay="l"]) #tourpill{font-size:12px;padding:6px 6px 6px 13px}
+}
+html[data-lay="p"] #top{height:50px;padding:0 11px;gap:9px}
+html[data-lay="p"] #top .t2{display:none}
+html[data-lay="p"] #top .t1{font-size:14.5px}
+html[data-lay="p"] #top .logo{width:28px;height:28px}
+html[data-lay="p"] #top .acts .lt{display:none}
+html[data-lay="p"] .tbtn{height:32px;padding:0 9px;font-size:12px}
+html[data-lay="p"] #side{
+  position:absolute;left:0;top:0;bottom:0;width:min(400px,88%);flex:none;
+  transform:translateX(-103%);transition:transform .28s ease;z-index:35;
+  box-shadow:14px 0 44px rgba(0,0,0,.55);border-right:1px solid var(--line2);
+}
+html[data-lay="p"] #side.open{transform:none}
+html[data-lay="p"] #btnList{display:inline-flex}
+html[data-lay="p"] #legend{display:none}
+html[data-lay="p"] .drama .dname{font-size:36px}
+html[data-lay="p"] .mbtn{height:34px;padding:0 11px;font-size:12px}
+html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
+</style>
+</head>
+<body>
+
+<div id="top">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 40 40" fill="none">
+      <rect x="3" y="9" width="34" height="24" rx="5" stroke="#E3B563" stroke-width="2"/>
+      <path d="M3 15l6-4 8 4 8-4 8 4" stroke="#E3B563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16.5 21.5l7 4-7 4v-8z" fill="#E3B563"/>
+    </svg>
+    <div>
+      <div class="t1">跟着电视剧游上海 · <b>《轧戏》</b></div>
+      <div class="t2">取景地打卡指南 ｜ 4 大主题 · 11 处点位 ｜ 肖稚宇 × 胡羞 同款路线</div>
+    </div>
+  </div>
+  <div class="acts">
+    <button class="tbtn primary" id="btnQR">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="2.5" width="5.5" height="5.5" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="12" y="2.5" width="5.5" height="5.5" rx="1.4" stroke="currentColor" stroke-width="1.6"/><rect x="2.5" y="12" width="5.5" height="5.5" rx="1.4" stroke="currentColor" stroke-width="1.6"/><path d="M12 12h2.5v2.5H12zM15.5 15.5h2M17.5 12v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      存入手机
+    </button>
+    <button class="tbtn lt" id="btnHelp">使用说明</button>
+    <button class="tbtn" id="btnAbout">关于</button>
+    <button class="tbtn" id="btnLay" title="切换版式（自动/手机/桌面）">版式</button>
+  </div>
+</div>
+
+<div id="main">
+  <!-- 左侧：剧名卡片 + 分组点位 -->
+  <aside id="side">
+    <div class="scroll">
+      <div class="drama">
+        <div class="dtop">
+          <div class="dname">轧戏</div>
+          <div class="den">Love<br>Between<br>Lines</div>
+        </div>
+        <div class="dtags"><span>沉浸式剧本杀</span><span>都市甜愈剧</span><span>戏中戏双时空</span><span>全28集</span></div>
+        <div class="dmeta"><b>2026.01.09</b> 起 · 爱奇艺恋恋剧场全网独播 · 东方卫视同步播出</div>
+        <div class="dmeta">导演 <b>猫的树</b> ｜ 领衔主演 <b>陈星旭</b>（饰 肖稚宇）· <b>卢昱晓</b>（饰 胡羞）｜ 特别主演 <b>代旭</b>（饰 裴轸）</div>
+        <p class="dsum">一场民国雪夜剧本杀，让建筑师胡羞与神秘「督军」秦宵一高手过招；戏外重逢才发现，戏里的人近在眼前——房东与租客，总裁与设计师，在戏里戏外的穿梭里双向奔赴。</p>
+        <div class="dcamp">上海市文化和旅游局 ×《轧戏》「轧戏 × 上海打卡图鉴」电子打卡活动进行中——本指南据此整理。</div>
+        <svg class="sky" viewBox="0 0 400 64" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+          <g fill="#0B0D11">
+            <rect x="4" y="40" width="22" height="24"/><rect x="30" y="30" width="15" height="34"/>
+            <rect x="49" y="44" width="19" height="20"/><rect x="72" y="34" width="13" height="30"/>
+            <rect x="89" y="46" width="24" height="18"/><rect x="117" y="26" width="16" height="38"/>
+            <rect x="137" y="42" width="12" height="22"/><rect x="153" y="36" width="20" height="28"/>
+            <path d="M178 64v-26l4-8 4 8v26z"/>
+            <rect x="190" y="14" width="3.4" height="50"/>
+            <circle cx="191.7" cy="12.5" r="4.6"/><circle cx="191.7" cy="30" r="7.2"/>
+            <path d="M183 64l2.4-20h12.6l2.4 20z"/>
+            <rect x="202" y="22" width="14" height="42"/><rect x="220" y="38" width="18" height="26"/>
+            <rect x="242" y="44" width="12" height="20"/><rect x="258" y="30" width="16" height="34"/>
+            <path d="M278 64v-22c0-9 7-14 12-19 5 5 12 10 12 19v22z" opacity=".92"/>
+            <rect x="306" y="40" width="15" height="24"/><rect x="325" y="34" width="12" height="30"/>
+            <rect x="341" y="46" width="18" height="18"/><rect x="363" y="38" width="14" height="26"/>
+            <rect x="381" y="44" width="15" height="20"/>
+          </g>
+          <g fill="#E3B563" opacity=".5">
+            <rect x="9" y="45" width="2.6" height="2.6"/><rect x="15" y="52" width="2.6" height="2.6"/>
+            <rect x="34" y="36" width="2.4" height="2.4"/><rect x="40" y="46" width="2.4" height="2.4"/>
+            <rect x="76" y="40" width="2.2" height="2.2"/><rect x="121" y="32" width="2.4" height="2.4"/>
+            <rect x="121" y="42" width="2.4" height="2.4"/><rect x="157" y="42" width="2.4" height="2.4"/>
+            <rect x="206" y="28" width="2.4" height="2.4"/><rect x="206" y="40" width="2.4" height="2.4"/>
+            <rect x="224" y="44" width="2.4" height="2.4"/><rect x="262" y="36" width="2.4" height="2.4"/>
+            <rect x="286" y="44" width="2.4" height="2.4"/><rect x="329" y="40" width="2.4" height="2.4"/>
+            <rect x="367" y="44" width="2.4" height="2.4"/><rect x="386" y="50" width="2.4" height="2.4"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="chipwrap">
+        <div class="clab">按主题筛选 · 点徽标只看这条线</div>
+        <div class="chips" id="chips"></div>
+      </div>
+
+      <div id="list"></div>
+    </div>
+    <div class="sfoot">
+      <div class="fl">
+        <button id="fHelp">使用说明</button><button id="fDisc">免责声明</button><button id="fAbout">关于</button>
+      </div>
+      <div>取景地信息来源：上海市文旅局「轧戏×上海打卡图鉴」、公开报道与网友考证（卡片已标注）；坐标采用高德地图 GCJ-02。</div>
+      <div>© 永远的兰兰（Lanlan Eternal）· 本地单文件页面 · 不收集任何位置信息</div>
+    </div>
+  </aside>
+
+  <!-- 右侧：地图 -->
+  <main id="stage">
+    <div id="map"></div>
+
+    <div id="tools">
+      <button class="mbtn" id="btnTour">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 11.5a7 7 0 1014 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10 17.5L7.6 14.6h4.8L10 17.5z" fill="currentColor"/><circle cx="10" cy="4.6" r="1.8" fill="currentColor"/></svg>
+        巡游模式
+      </button>
+      <button class="mbtn" id="btnFly">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M2.5 15.5c3.5 1 6-1.5 8-4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.5 11c1.5-3 4.5-5.5 7-5.5-.5 3-2.5 6-5.5 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17.5" cy="4.5" r="1.5" fill="currentColor"/></svg>
+        飞线动画
+      </button>
+      <button class="mbtn" id="btnFit">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 7V4h3M16 7V4h-3M4 13v3h3M16 13v3h-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        全览
+      </button>
+      <button class="mbtn" id="btnList">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        点位列表
+      </button>
+    </div>
+
+    <div id="tourpill"><span class="tt" id="tourtxt"></span><button class="stop" id="btnTourStop">停止</button></div>
+
+    <div id="legend"></div>
+
+    <div id="maperr"><div class="box">
+      <h3>地图组件暂时无法加载</h3>
+      <p>当前环境未能加载高德地图 JS API。本页地图需要有效的<b>高德地图 Web 端 Key</b>（免费申请入口：lbs.amap.com）。请用文本编辑器打开本文件，搜索 <b>AMAP_KEY</b> 并按注释说明替换为你自己的 Key。<br>左侧的点位清单、剧情注解、二维码与导航链接不受影响，均可正常使用。</p>
+    </div></div>
+  </main>
+</div>
+
+<!-- 二维码 -->
+<div class="mask" id="mQR">
+  <div class="dlg">
+    <div class="dh">扫码打开 · 在线版<button class="x" data-close>×</button></div>
+    <div class="db">
+      <div class="qrwrap">
+        <div class="qrcard"><svg shape-rendering="crispEdges" width="37" height="37" class="segno"><path class="qrline" stroke="#20242b" d="M4 4.5h7m1 0h2m1 0h1m2 0h1m1 0h3m3 0h7m-29 1h1m5 0h1m3 0h1m1 0h1m1 0h1m2 0h2m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m4 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h4m1 0h1m1 0h4m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m1 0h3m2 0h1m3 0h1m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h4m3 0h1m1 0h1m1 0h1m-21 1h1m1 0h1m3 0h2m1 0h2m1 0h2m1 0h1m3 0h2m2 0h1m2 0h1m1 0h1m-29 1h2m1 0h2m2 0h2m1 0h1m5 0h1m1 0h1m1 0h1m1 0h1m4 0h2m-26 1h2m1 0h5m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m-28 1h2m2 0h1m4 0h1m1 0h1m1 0h3m3 0h2m3 0h1m-26 1h1m3 0h4m2 0h1m1 0h2m2 0h1m3 0h1m1 0h1m1 0h1m3 0h1m-29 1h3m1 0h2m2 0h2m2 0h1m1 0h1m1 0h2m2 0h2m1 0h1m3 0h2m-27 1h1m1 0h1m1 0h3m2 0h5m1 0h3m2 0h1m1 0h1m3 0h1m-25 1h2m1 0h1m3 0h1m9 0h1m1 0h1m-22 1h1m1 0h1m1 0h4m1 0h1m1 0h1m5 0h2m1 0h1m1 0h1m3 0h1m-27 1h1m2 0h1m6 0h2m2 0h1m1 0h1m1 0h2m1 0h1m2 0h3m-29 1h2m1 0h2m1 0h3m3 0h1m2 0h1m1 0h1m1 0h4m2 0h1m2 0h1m-26 1h1m1 0h1m2 0h3m3 0h3m1 0h7m-25 1h2m2 0h3m5 0h1m1 0h1m1 0h1m3 0h6m1 0h1m-20 1h3m2 0h1m1 0h1m4 0h1m3 0h3m1 0h1m-29 1h7m1 0h4m3 0h1m2 0h3m1 0h1m1 0h1m3 0h1m-29 1h1m5 0h1m4 0h1m2 0h3m2 0h2m3 0h1m3 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h4m1 0h1m1 0h8m1 0h1m-28 1h1m1 0h3m1 0h1m2 0h5m1 0h3m2 0h2m3 0h2m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m3 0h4m1 0h1m2 0h2m-29 1h1m5 0h1m2 0h4m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m-26 1h7m1 0h1m1 0h5m1 0h1m3 0h1m1 0h2m2 0h1m1 0h1"/></svg></div>
+        <div class="qrcap">微信 / 相机扫码 → 打开在线版打卡页<br>全部 <b>11 处</b>取景地 + 地图 + 一键导航，可收藏分享同好</div>
+        <div class="qrsteps">
+          <div class="s"><i>1</i><span>用微信「扫一扫」或相机拍摄左侧二维码</span></div>
+          <div class="s"><i>2</i><span>打开在线版页面，4 大主题 11 处点位一图看全</span></div>
+          <div class="s"><i>3</i><span>点开任意点位即可<b>一键导航前往</b>，也能把链接转发给同好</span></div>
+        </div>
+        <div class="qrurl" id="qrurl"></div>
+        <button class="tbtn" id="btnCopyURL" style="align-self:stretch;justify-content:center">复制链接</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 使用说明 -->
+<div class="mask" id="mHelp">
+  <div class="dlg">
+    <div class="dh">使用说明<button class="x" data-close>×</button></div>
+    <div class="db">
+      <h4>看点位</h4>
+      <p>左侧列表按 4 大主题分组，每张卡片含名称、地址、剧情注解与打卡提示；点卡片即在地图上定位并弹出详情。</p>
+      <h4>筛主题</h4>
+      <p>点列表上方的分组徽标（全部 / 落日江岸 / 入戏入口 / 市井弄堂 / 奔赴盛筵），左侧列表与右侧地图同步筛选。</p>
+      <h4>巡游模式</h4>
+      <p>地图右上角「巡游模式」：按当前顺序自动飞到每一处点位并弹出讲解，适合先云游一遍全线路；随时点「停止」或按 Esc 结束。</p>
+      <h4>飞线动画</h4>
+      <p>「飞线动画」：把当前筛选的点位按顺序连成一条流动的金色飞线，预览路线走向与点位分布。</p>
+      <h4>存入手机</h4>
+      <p>顶栏「存入手机」生成二维码：扫码打开在线版页面（建议在微信里「收藏」或添加到浮窗，出行时随时打开），页面内含全部点位与一键导航，也可把链接分享给同好。</p>
+      <h4>坐标说明</h4>
+      <p>页面使用高德地图坐标（GCJ-02，与腾讯地图同源，可直接互粘）。个别点位为片区级位置（如园区、桥梁），导航时请以点位名称为准。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 免责声明 -->
+<div class="mask" id="mDisc">
+  <div class="dlg">
+    <div class="dh">免责声明<button class="x" data-close>×</button></div>
+    <div class="db">
+      <p>本页为剧迷自制的第三方打卡指南，<b>非官方页面</b>，与《轧戏》剧组、播出平台及各取景地场地无任何关联。</p>
+      <p>取景地信息来自上海市文化和旅游局「轧戏×上海打卡图鉴」、公开媒体报道与网友考证；卡片标注「网友考证」的点位未经官方确认。各场地开放时间、门票、营业时间可能变动，出行前请以其官方信息为准。</p>
+      <p>打卡请遵守场地规定，文明拍摄，勿打扰居民与正常经营；进入小区、园区请配合管理。</p>
+      <p>地图服务由高德地图提供，二维码与导航链接由高德地图 URI API 生成；链接内容以打开时的服务状态为准。</p>
+      <p>本页为单文件在线页面，不收集、不上传、不存储任何用户位置信息。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 关于 -->
+<div class="mask" id="mAbout">
+  <div class="dlg">
+    <div class="dh">关于<button class="x" data-close>×</button></div>
+    <div class="db">
+      <p><b>跟着电视剧游上海 ·《轧戏》篇</b>——4 大主题、11 处真实取景地的打卡指南单页。</p>
+      <p>地图：高德地图 JS API 2.0（GCJ-02 坐标）｜ 取景地：上海市文旅局打卡图鉴 + 公开报道 + 网友考证 ｜ 二维码：在线版页面链接。</p>
+      <p>形态：单文件 HTML，可部署为在线版（GitHub Pages 等）；地图组件需联网加载并配置高德 Web 端 Key。</p>
+      <p class="gold">制作：阿砚 ✒️ ｜ 署名：© 永远的兰兰（Lanlan Eternal）</p>
+      <p>版本 v1.0 · 2026-10</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+var THEMES=[{"id": "t1", "name": "初遇 · 落日与江风", "color": "#FF8A5C", "desc": "缘分开始的地方"}, {"id": "t2", "name": "入戏 · 剧本杀入口", "color": "#9D7CFF", "desc": "戏里戏外的交界"}, {"id": "t3", "name": "市井 · 家的方向", "color": "#4ECDC4", "desc": "海派日常与烟火气"}, {"id": "t4", "name": "奔赴 · 一餐一饭一园", "color": "#F2C94C", "desc": "把误会哄好的味道"}];
+var POINTS=[{"id": 1, "theme": "t1", "name": "滨江日落长廊", "addr": "浦东新区滨江大道2777号", "lat": 31.2384, "lng": 121.4956, "story": "肖稚宇与胡羞在现实里初次相遇又擦肩而过的地方，也是两人第一次深入交谈、缘分种下之处。长廊正对外滩万国建筑群，傍晚天色由橙红渐入靛紫。", "tip": "从浦东美术馆西门沿台阶下到江边长廊；冬季约18:00、夏季约19:00两岸亮灯，带长焦可拍对岸外滩全景。", "src": "官方"}, {"id": 2, "theme": "t1", "name": "乍浦路桥", "addr": "虹口区 · 苏州河（近外白渡桥）", "lat": 31.244184, "lng": 121.487784, "story": "胡羞面试未如愿后独自走过的桥。站在桥上看近处苏州河波光、远处陆家嘴「三件套」，是剧中「都市孤独感」的名场面。", "tip": "经典机位在桥中段，拍「苏州河＋陆家嘴」同框；蓝调时刻最佳，距外白渡桥仅约250米，可串联外滩一起走。", "src": "媒体"}, {"id": 3, "theme": "t1", "name": "朵云书院 · 滴水湖店", "addr": "浦东新区环湖西一路91号港城广场5-7楼", "lat": 30.9089, "lng": 121.9284, "story": "让胡羞一眼心动的「星河书屋」正是肖稚宇的成名作。20米通天书架沿阶梯层叠攀升，180度落地窗直面5.6平方公里湖面。", "tip": "地铁16号线滴水湖站出站即到；临窗观景位先到先得，10:00-20:00营业；顺路可打卡上海天文馆、中国航海博物馆。", "src": "媒体"}, {"id": 4, "theme": "t2", "name": "EKA · 天物", "addr": "浦东新区金桥路535号", "lat": 31.264188, "lng": 121.57572, "story": "剧中剧本杀的入口——园区里的「铜堡」与「天空之镜」；水池边的兰巴赫西餐厅，正是胡羞闺蜜那间咖啡店。", "tip": "建议傍晚拍「铜堡」灯光；园区由旧厂房改造，「浦东版上生新所」，工业风与欧式城堡混搭，很出片。", "src": "媒体"}, {"id": 5, "theme": "t2", "name": "上海影视乐园（车墩）", "addr": "松江区北松公路4915号", "lat": 31.009963, "lng": 121.312855, "story": "每当剧情切进剧本杀时空，场景便落到这里：1:1复刻的老南京路、石库门里弄、欧式庭院与有轨电车，重现老上海片场。", "tip": "开放时间约8:30-16:30，门票以现场公示为准；园内有换装拍照与剧同款沉浸式剧场，适合预留半天。", "src": "官方"}, {"id": 6, "theme": "t3", "name": "永盛里", "addr": "徐汇区嘉善路101弄", "lat": 31.211208, "lng": 121.459364, "story": "剧中反复出现的弄堂：胡羞的家，也是肖稚宇租住并与之合租的地方。初吻、过年、深夜谈心，都浸在这条1936年的石库门里。", "tip": "上海市优秀历史建筑，拍照请放轻脚步、勿扰居民；弄口就是便利店，两个点位可以一起拍。", "src": "官方"}, {"id": 7, "theme": "t3", "name": "罗森便利店（嘉善路101号店）", "addr": "徐汇区嘉善路101号", "lat": 31.2114, "lng": 121.45975, "story": "胡羞在这里接到事务所面试邀请的电话——整个故事起点的那个小小店口，男女主的剧照也在这里拍过。", "tip": "就在永盛里弄口，顺路拍「转角遇到同款」；买杯咖啡坐窗边，复刻剧中氛围感。", "src": "媒体"}, {"id": 8, "theme": "t3", "name": "中成智谷 · 成美术馆", "addr": "宝山区长江路258号", "lat": 31.349314, "lng": 121.499753, "story": "胡羞前去面试的建筑设计事务所Dynamism（剧中「岱岸」）。成美术馆由上海储运旧仓库改造，混凝土墙面撞上大面积落地玻璃。", "tip": "园区全天开放，美术馆10:00-18:00（周一闭馆）；红砖房、百年铁轨与装卸月台是工业风出片位。", "src": "官方"}, {"id": 9, "theme": "t4", "name": "Garlic 大蒜土耳其餐厅", "addr": "徐汇区永嘉路698号1楼（近安亭路）", "lat": 31.20281, "lng": 121.44786, "story": "第11集男女主解除误会的餐厅：男主以为女主去相亲而吃醋，女主一个蛋糕惊喜立马把人哄好。", "tip": "位于永平里异国餐厅街区，餐前赠现烤土耳其饼；营业以晚间为主（周末午市开放），建议提前订位。", "src": "媒体"}, {"id": 10, "theme": "t4", "name": "Chili's（长泰广场店）", "addr": "浦东新区祖冲之路1181号长泰广场6座1楼", "lat": 31.20607, "lng": 121.602084, "story": "胡羞与闺蜜晚间约会、谈天说地的美式餐厅，张江副中心的繁华背景板（网友考证取景地）。", "tip": "长泰广场餐饮零售一体，逛街观影顺路；美式分量足，两人点单别贪多。", "src": "网友"}, {"id": 11, "theme": "t4", "name": "辰山植物园", "addr": "松江区辰花路3888号", "lat": 31.075963, "lng": 121.183015, "story": "肖稚宇为化解逃避与隔阂，特意安排的一场散心之旅。矿坑花园以深潭、飞瀑与悬崖植被，造出宛如异星的秘境。", "tip": "矿坑花园与温室花园是精华；园区很大，预留半天，建议自驾或地铁接驳前往。", "src": "官方"}];
+var ONLINE_URL="https://YOUR-USERNAME.github.io/YOUR-REPO/";
+
+
+/* ================= 基础工具 ================= */
+function esc(s){
+  return String(s==null?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function $(id){ return document.getElementById(id); }
+function themeOf(t){ for(var i=0;i<THEMES.length;i++) if(THEMES[i].id===t) return THEMES[i]; return THEMES[0]; }
+function srcName(s){ return s==='official'?'官方图鉴':(s==='media'?'媒体考证':'网友考证'); }
+function srcCls(s){ return s==='official'?'official':(s==='media'?'media':''); }
+var PZOOM={1:15,2:15.6,3:14.6,4:15,5:13,6:16,7:16.6,8:15,9:16,10:15.6,11:13};
+var THEME_SHORT={t1:'落日江岸',t2:'入戏入口',t3:'市井弄堂',t4:'奔赴盛筵'};
+function pad2(n){ return (n<10?'0':'')+n; }
+function ll(p){ return [p.lng, p.lat]; } /* 高德 LngLatLike：[经度, 纬度] */
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+
+function ico(name){
+  if(name==='pin') return '<svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5a5.4 5.4 0 00-5.4 5.4c0 3.9 5.4 9.6 5.4 9.6s5.4-5.7 5.4-9.6A5.4 5.4 0 0010 2.5z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="7.9" r="1.9" stroke="currentColor" stroke-width="1.5"/></svg>';
+  if(name==='tip') return '<svg viewBox="0 0 20 20" fill="none"><path d="M10 2.6l1.5 3.4 3.7.4-2.8 2.5.8 3.6-3.2-1.8-3.2 1.8.8-3.6L4.8 6.4l3.7-.4L10 2.6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+  if(name==='nav') return '<svg viewBox="0 0 20 20" fill="none"><path d="M17 3L8.4 10.6 10 13.4l-1.6 2.6-2.4-1.6L4.4 17 3 3l14 0z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+  return '';
+}
+
+/* ================= 高德 Key 配置 =================
+   使用前请前往 https://lbs.amap.com/ （高德开放平台）申请「Web 服务」类型 Key（免费），
+   将下方字符串替换为你自己的 Key。个人使用可在控制台绑定域名白名单，防止被他人盗用。
+   未配置有效 Key 时地图组件无法渲染；左侧列表、二维码与导航链接不受影响。 */
+var AMAP_KEY = "请替换为你在 lbs.amap.com 申请的高德地图 Web 端 Key";
+
+/* ================= 状态 ================= */
+var S={ filter:'all', sel:0, lay:'auto' };
+var TOUR={ on:false, i:0, timer:0 };
+var FLY={ on:false, raf:0, timer:0, last:0 };
+var map=null, markerOf={}, infoWin=null, iwDom=null, dotMk=null;
+var ghostLine=null, glowLine=null, coreLine=null;
+var MAP_OK=false;
+var lastMarkerClick=0;
+
+/* ================= 地图 ================= */
+function pinSVG(color, num, big){
+  var fs = big?13:11;
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 44">'
+    +'<path d="M17 1.6C8.9 1.6 2.4 8.1 2.4 16.2c0 10.4 14.6 26.2 14.6 26.2s14.6-15.8 14.6-26.2C31.6 8.1 25.1 1.6 17 1.6z" fill="'+color+'" stroke="rgba(255,255,255,.9)" stroke-width="1.6"/>'
+    +'<circle cx="17" cy="15.8" r="9.6" fill="rgba(10,12,16,.32)"/>'
+    +'<text x="17" y="19.6" font-size="'+fs+'" font-weight="700" text-anchor="middle" fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif">'+num+'</text>'
+    +'</svg>';
+}
+function pinHTML(color, num, big){
+  return '<div class="mpin'+(big?' b':'')+'">'+pinSVG(color, num, big)+'</div>';
+}
+function dotHTML(){
+  return '<div class="mpdot"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">'
+    +'<circle cx="11" cy="11" r="9.6" fill="rgba(245,201,107,.16)"/>'
+    +'<circle cx="11" cy="11" r="5" fill="#FFE9B8" stroke="#B98A2E" stroke-width="1"/>'
+    +'</svg></div>';
+}
+
+function initMap(){
+  if(!window.AMapLoader){ showMapErr(); return; }
+  var t0=Date.now();
+  Promise.race([
+    AMapLoader.load({ key: AMAP_KEY, version: '2.0' }),
+    new Promise(function(_, rej){ setTimeout(function(){ rej(new Error('amap loader timeout')); }, 9000); })
+  ]).then(function(AMap){
+    try{
+      map=new AMap.Map('map',{
+        center:[121.50,31.16], zoom:9.8, viewMode:'2D'
+      });
+      try{ map.addControl(new AMap.ToolBar({position:'RB'})); }catch(e2){}
+      try{ map.addControl(new AMap.Scale({position:'LB'})); }catch(e3){}
+
+      /* 点位 markers（DOM content 覆盖物，锚点=pin 底部尖端） */
+      markerOf={};
+      for(var i=0;i<POINTS.length;i++){
+        (function(p){
+          var th=themeOf(p.theme);
+          var m=new AMap.Marker({
+            position:ll(p), map:map, zIndex:10,
+            offset:new AMap.Pixel(-15,-38),
+            content:pinHTML(th.color, p.id, false)
+          });
+          m.on('click', function(){
+            lastMarkerClick=Date.now();
+            focusPoint(p.id, {zoom:true});
+          });
+          markerOf[p.id]=m;
+        })(POINTS[i]);
+      }
+
+      /* 三条折线：ghost 虚线底 / glow 粗晕 / core 金主线 */
+      ghostLine=new AMap.Polyline({map:map, path:[], zIndex:5,
+        strokeColor:'rgba(227,181,99,.28)', strokeWeight:2, strokeOpacity:1,
+        strokeStyle:'dashed', strokeDasharray:[2,7], lineCap:'round', lineJoin:'round'});
+      glowLine=new AMap.Polyline({map:map, path:[], zIndex:6,
+        strokeColor:'#F5C96B', strokeOpacity:.16, strokeWeight:10,
+        strokeStyle:'solid', lineCap:'round', lineJoin:'round'});
+      coreLine=new AMap.Polyline({map:map, path:[], zIndex:8,
+        strokeColor:'#F5C96B', strokeWeight:3, strokeOpacity:1,
+        strokeStyle:'solid', lineCap:'round', lineJoin:'round'});
+      dotMk=new AMap.Marker({offset:new AMap.Pixel(-10,-10), zIndex:60, content:dotHTML()});
+
+      /* 自定义信息窗 */
+      infoWin=new AMap.InfoWindow({isCustom:true, anchor:'bottom-center',
+        offset:new AMap.Pixel(0,-8), closeWhenClickMap:false, autoMove:true});
+      iwDom=document.createElement('div');
+
+      map.on('click', function(){
+        if(Date.now()-lastMarkerClick<400) return;
+        closeInfo(); S.sel=0; refreshMarkers(); markListActive(0);
+      });
+
+      MAP_OK=true;
+      refreshMarkers();
+      fitAll();
+    }catch(e){
+      console.error('map init error', e);
+      showMapErr();
+    }
+  }).catch(function(e){
+    console.error('amap load error', e);
+    showMapErr();
+  });
+}
+function showMapErr(){ $('maperr').style.display='flex'; }
+
+function pointById(id){
+  for(var i=0;i<POINTS.length;i++) if(POINTS[i].id===id) return POINTS[i];
+  return null;
+}
+function refreshMarkers(){
+  if(!MAP_OK) return;
+  var vis={};
+  var list=curPoints();
+  for(var i=0;i<list.length;i++) vis[list[i].id]=1;
+  for(var id in markerOf){
+    var p=pointById(parseInt(id,10));
+    if(!p) continue;
+    var on=!!vis[id], sel=(p.id===S.sel);
+    var th=themeOf(p.theme);
+    markerOf[id].setMap(on?map:null);
+    markerOf[id].setContent(pinHTML(sel?'#F5D48A':th.color, p.id, sel));
+    if(markerOf[id].setTop) markerOf[id].setTop(sel);
+  }
+}
+function clearLines(){
+  if(!MAP_OK) return;
+  ghostLine.setPath([]); glowLine.setPath([]); coreLine.setPath([]);
+  if(dotMk) dotMk.setMap(null);
+}
+
+function infoHTML(p){
+  var th=themeOf(p.theme);
+  var mURI='https://uri.amap.com/marker?position='+p.lng+','+p.lat
+    +'&name='+encodeURIComponent(p.name)+'&coordinate=gaode&callnative=1';
+  var rURI='https://uri.amap.com/navigation?to='+p.lng+','+p.lat+','+encodeURIComponent(p.name)
+    +'&mode=car&coordinate=gaode&callnative=1';
+  return '<div class="iw" style="--c:'+th.color+'">'
+    +'<button class="iwx" data-act="iwclose" title="关闭">×</button>'
+    +'<div class="iwh"><span class="iwn">'+pad2(p.id)+'</span><span class="iwt">'+esc(p.name)+'</span></div>'
+    +'<div class="iwa">'+esc(p.addr)+' · '+srcName(p.src)+'</div>'
+    +'<div class="iws">'+esc(p.story)+'</div>'
+    +'<div class="iwp"><b>打卡提示</b> '+esc(p.tip)+'</div>'
+    +'<div class="iwb">'
+      +'<a class="nav" href="'+mURI+'" target="_blank" rel="noopener">'+ico('nav')+'高德地图打开</a>'
+      +'<a href="'+rURI+'" target="_blank" rel="noopener">一键导航</a>'
+      +'<button data-act="copy" data-v="'+p.lng+', '+p.lat+'">复制坐标</button>'
+    +'</div>'
+  +'</div>';
+}
+function openInfo(p){
+  if(!MAP_OK) return;
+  iwDom.innerHTML=infoHTML(p);
+  infoWin.setContent(iwDom);
+  infoWin.open(map, ll(p));
+  bindInfoBtns();
+}
+function closeInfo(){ if(MAP_OK && infoWin) infoWin.close(); }
+function bindInfoBtns(){
+  if(!MAP_OK || !iwDom) return;
+  var els=iwDom.querySelectorAll('[data-act]');
+  for(var i=0;i<els.length;i++){
+    (function(el){
+      el.onclick=function(ev){
+        ev.stopPropagation();
+        var act=el.getAttribute('data-act');
+        if(act==='iwclose'){ closeInfo(); }
+        else if(act==='copy'){ copyText(el.getAttribute('data-v'),'坐标已复制（GCJ-02，可直接粘贴进高德地图搜索）'); }
+      };
+    })(els[i]);
+  }
+}
+
+function focusPoint(id, opt){
+  opt=opt||{};
+  var p=null;
+  for(var i=0;i<POINTS.length;i++) if(POINTS[i].id===id) p=POINTS[i];
+  if(!p) return;
+  S.sel=id;
+  refreshMarkers();
+  markListActive(id);
+  if(MAP_OK){
+    var z=opt.zoom!==false?(PZOOM[id]||15):map.getZoom();
+    map.setZoomAndCenter(z, ll(p), false, 1100);
+    openInfo(p);
+  }
+  if(opt.scroll!==false){
+    var el=document.querySelector('.pt[data-id="'+id+'"]');
+    if(el && el.scrollIntoView) el.scrollIntoView({block:'nearest', behavior:'smooth'});
+  }
+  if(isPhoneLay()){
+    $('side').classList.remove('open');
+  }
+}
+function isPhoneLay(){
+  var l=document.documentElement.getAttribute('data-lay');
+  if(l==='p') return true;
+  if(l==='l') return false;
+  return innerWidth<=900;
+}
+
+function fitAll(){
+  if(!MAP_OK) return;
+  var list=curPoints();
+  if(!list.length) return;
+  var arr=[];
+  for(var i=0;i<list.length;i++){
+    var m=markerOf[list[i].id];
+    if(m && m.getMap && m.getMap()) arr.push(m);
+  }
+  if(arr.length) map.setFitView(arr, false, [70,70,70,70]);
+}
+
+/* ================= 列表 / 筛选 ================= */
+function curPoints(){
+  if(S.filter==='all') return POINTS.slice();
+  var out=[];
+  for(var i=0;i<POINTS.length;i++) if(POINTS[i].theme===S.filter) out.push(POINTS[i]);
+  return out;
+}
+function renderChips(){
+  var h='';
+  h+='<button class="chip'+(S.filter==='all'?' on':'')+'" data-f="all" style="'+(S.filter==='all'?'background:linear-gradient(180deg,#E9C173,#D9A447)':'')+'">全部点位<i>'+POINTS.length+' 处</i></button>';
+  for(var i=0;i<THEMES.length;i++){
+    var th=THEMES[i], n=0;
+    for(var j=0;j<POINTS.length;j++) if(POINTS[j].theme===th.id) n++;
+    h+='<button class="chip'+(S.filter===th.id?' on':'')+'" data-f="'+th.id+'" style="'+(S.filter===th.id?'background:'+th.color:'')+'">'
+      +'<span><span class="dot" style="background:'+th.color+'"></span>'+esc(THEME_SHORT[th.id])+'</span><i>'+n+' 处</i></button>';
+  }
+  $('chips').innerHTML=h;
+}
+function ptHTML(p){
+  var th=themeOf(p.theme);
+  return '<div class="pt" data-id="'+p.id+'" role="button" tabindex="0" aria-label="'+esc(p.name)+'">'
+    +'<div class="num" style="--c:'+th.color+'">'+pad2(p.id)+'</div>'
+    +'<div class="body">'
+      +'<div class="nm">'+esc(p.name)+'<span class="src '+srcCls(p.src)+'">'+srcName(p.src)+'</span></div>'
+      +'<div class="ad">'+ico('pin')+esc(p.addr)+'</div>'
+      +'<div class="st">'+esc(p.story)+'</div>'
+      +'<div class="tp">'+ico('tip')+'<span><b>打卡提示</b> '+esc(p.tip)+'</span></div>'
+    +'</div>'
+  +'</div>';
+}
+function renderList(){
+  var h='';
+  if(S.filter==='all'){
+    for(var i=0;i<THEMES.length;i++){
+      var th=THEMES[i], pts=[];
+      for(var j=0;j<POINTS.length;j++) if(POINTS[j].theme===th.id) pts.push(POINTS[j]);
+      h+='<div class="grp" style="--c:'+th.color+'"><span class="bar"></span>'+esc(th.name)+'<span class="cnt">'+pts.length+' 处</span><span class="gdesc">'+esc(th.desc)+'</span></div>';
+      for(var k=0;k<pts.length;k++) h+=ptHTML(pts[k]);
+    }
+  }else{
+    var th2=themeOf(S.filter), pts2=[];
+    for(var m=0;m<POINTS.length;m++) if(POINTS[m].theme===S.filter) pts2.push(POINTS[m]);
+    h+='<div class="grp" style="--c:'+th2.color+'"><span class="bar"></span>'+esc(th2.name)+'<span class="cnt">'+pts2.length+' 处</span><span class="gdesc">'+esc(th2.desc)+'</span></div>';
+    for(var n=0;n<pts2.length;n++) h+=ptHTML(pts2[n]);
+  }
+  $('list').innerHTML=h;
+  markListActive(S.sel);
+}
+function markListActive(id){
+  var els=document.querySelectorAll('.pt');
+  for(var i=0;i<els.length;i++) els[i].classList.toggle('on', els[i].getAttribute('data-id')===String(id));
+}
+function renderLegend(){
+  var h='';
+  for(var i=0;i<THEMES.length;i++){
+    h+='<div class="li" style="--c:'+THEMES[i].color+'"><span class="sw"></span>'+esc(THEMES[i].name)+'</div>';
+  }
+  $('legend').innerHTML=h;
+}
+function setFilter(f){
+  S.filter=f;
+  tourStop(); flyStop();
+  renderChips(); renderList(); refreshMarkers(); clearLines();
+}
+
+/* ================= 巡游模式 ================= */
+function tourStart(){
+  var list=curPoints();
+  if(list.length<2){ toast('当前分组点位不足，无法巡游'); return; }
+  flyStop();
+  TOUR.on=true; TOUR.i=0;
+  $('btnTour').classList.add('on');
+  $('tourpill').style.display='flex';
+  tourNext();
+}
+function tourStop(done){
+  TOUR.on=false;
+  if(TOUR.timer){ clearTimeout(TOUR.timer); TOUR.timer=0; }
+  $('btnTour').classList.remove('on');
+  $('tourpill').style.display='none';
+  if(done) toast('巡游完成 · 共 '+curPoints().length+' 站');
+}
+function tourNext(){
+  if(!TOUR.on) return;
+  var list=curPoints();
+  if(TOUR.i>=list.length){ tourStop(true); return; }
+  var p=list[TOUR.i];
+  $('tourtxt').textContent='巡游 '+(TOUR.i+1)+'/'+list.length+' · '+p.name;
+  S.sel=p.id; refreshMarkers(); markListActive(p.id);
+  var el=document.querySelector('.pt[data-id="'+p.id+'"]');
+  if(el && el.scrollIntoView) el.scrollIntoView({block:'nearest'});
+  if(MAP_OK){
+    map.setZoomAndCenter(PZOOM[p.id]||15, ll(p), false, 1300);
+    openInfo(p);
+  }
+  TOUR.i++;
+  TOUR.timer=setTimeout(tourNext, 3400);
+}
+
+/* ================= 飞线动画 ================= */
+function lerpLL(a,b,t){
+  return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t];
+}
+function flyStart(){
+  var list=curPoints();
+  if(list.length<2){ toast('当前分组点位不足，无法连线'); return; }
+  tourStop();
+  FLY.on=true;
+  $('btnFly').classList.add('on');
+  var path=[];
+  for(var i=0;i<list.length;i++) path.push(ll(list[i]));
+  if(MAP_OK){
+    ghostLine.setPath(path);
+  }
+  var n=path.length-1, dur=Math.max(4200, n*1500), t0=performance.now();
+  FLY.last=0;
+  function frame(t){
+    if(!FLY.on) return;
+    var prog=clamp((t-t0)/dur, 0, 1);
+    var x=prog*n, i=Math.floor(x), f=x-i;
+    var cur = i<n ? lerpLL(path[i], path[i+1], f) : path[n];
+    var vis=path.slice(0, i+1);
+    if(i<n) vis.push(cur);
+    if(MAP_OK){
+      glowLine.setPath(vis);
+      coreLine.setPath(vis);
+      dotMk.setPosition(cur);
+      if(!dotMk.getMap || !dotMk.getMap()) dotMk.setMap(map);
+    }
+    if(prog<1){ FLY.raf=requestAnimationFrame(frame); }
+    else{
+      FLY.timer=setTimeout(function(){
+        if(!FLY.on) return;
+        clearLines();
+        flyStart();
+      }, 1600);
+    }
+  }
+  FLY.raf=requestAnimationFrame(frame);
+}
+function flyStop(){
+  FLY.on=false;
+  if(FLY.raf){ cancelAnimationFrame(FLY.raf); FLY.raf=0; }
+  if(FLY.timer){ clearTimeout(FLY.timer); FLY.timer=0; }
+  $('btnFly').classList.remove('on');
+  clearLines();
+}
+
+/* ================= 弹层 / 提示 ================= */
+function openModal(id){ $(id).classList.add('on'); }
+function closeModals(){
+  var ms=document.querySelectorAll('.mask.on');
+  for(var i=0;i<ms.length;i++) ms[i].classList.remove('on');
+}
+var toastTimer=0;
+function toast(msg){
+  var t=$('toast');
+  t.textContent=msg;
+  t.classList.add('on');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ t.classList.remove('on'); }, 2600);
+}
+function copyText(t, ok){
+  function done(){ toast(ok||'已复制'); }
+  function fb(){
+    var ta=document.createElement('textarea');
+    ta.value=t; ta.style.cssText='position:fixed;left:-999px;top:0;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta); done();
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done, fb);
+  }else fb();
+}
+
+/* ================= 版式 ================= */
+function layAuto(){
+  var w=innerWidth;
+  if(w<=840) return 'p';
+  if(window.matchMedia && matchMedia('(pointer:coarse)').matches && innerHeight>=innerWidth && w<=1200) return 'p';
+  return 'l';
+}
+function applyLay(){
+  var eff = S.lay==='auto' ? layAuto() : S.lay;
+  document.documentElement.setAttribute('data-lay', S.lay==='auto' ? 'auto' : eff);
+  document.documentElement.setAttribute('data-lay-eff', eff);
+}
+function setLay(m){
+  S.lay=m;
+  try{ localStorage.setItem('zaxie.lay', m); }catch(e){}
+  applyLay();
+  toast(m==='auto'?'版式：自动（按屏幕宽度）':(m==='p'?'版式：手机（抽屉式列表）':'版式：桌面（双栏）'));
+}
+
+/* ================= 事件绑定 ================= */
+function closestAttr(el, attr){
+  while(el && el!==document.body){
+    if(el.getAttribute && el.hasAttribute && el.hasAttribute(attr)) return el;
+    el=el.parentNode;
+  }
+  return null;
+}
+function bindEvents(){
+  document.addEventListener('click', function(e){
+    var t=e.target;
+    var chip=closestAttr(t,'data-f');
+    if(chip){ setFilter(chip.getAttribute('data-f')); return; }
+    var pt=closestAttr(t,'data-id');
+    if(pt && pt.classList.contains('pt')){
+      focusPoint(parseInt(pt.getAttribute('data-id'),10), {zoom:true});
+      return;
+    }
+    var close=closestAttr(t,'data-close');
+    if(close){ closeModals(); return; }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Enter' || e.key===' ' || e.key==='Spacebar'){
+      var pt=closestAttr(e.target,'data-id');
+      if(pt && pt.classList.contains('pt')){
+        if(closestAttr(e.target,'data-act')) return;
+        e.preventDefault();
+        focusPoint(parseInt(pt.getAttribute('data-id'),10), {zoom:true});
+      }
+    }
+    if(e.key==='Escape'){ closeModals(); if(TOUR.on) tourStop(); if(FLY.on) flyStop(); }
+  });
+
+  $('btnTour').onclick=function(){ TOUR.on ? tourStop() : tourStart(); };
+  $('btnFly').onclick=function(){
+    if(FLY.on){ flyStop(); return; }
+    flyStart();
+    toast('飞线动画：按当前筛选顺序连线'+(S.filter==='all'?'（全部 11 处）':'（'+themeOf(S.filter).name+'）'));
+  };
+  $('btnFit').onclick=function(){ fitAll(); };
+  $('btnList').onclick=function(){ $('side').classList.toggle('open'); };
+  $('btnTourStop').onclick=function(){ tourStop(); };
+
+  $('btnQR').onclick=function(){ openModal('mQR'); };
+  $('btnHelp').onclick=function(){ openModal('mHelp'); };
+  $('btnAbout').onclick=function(){ openModal('mAbout'); };
+  $('fHelp').onclick=function(){ openModal('mHelp'); };
+  $('fDisc').onclick=function(){ openModal('mDisc'); };
+  $('fAbout').onclick=function(){ openModal('mAbout'); };
+  $('btnLay').onclick=function(){
+    setLay(S.lay==='auto' ? 'p' : (S.lay==='p' ? 'l' : 'auto'));
+  };
+  $('btnCopyURL').onclick=function(){ copyText(ONLINE_URL, '链接已复制，可粘贴到微信或浏览器打开'); };
+
+  var masks=document.querySelectorAll('.mask');
+  for(var i=0;i<masks.length;i++){
+    masks[i].addEventListener('click', function(e){ if(e.target===this) this.classList.remove('on'); });
+  }
+}
+
+/* ================= 启动 ================= */
+function boot(){
+  try{ S.lay=localStorage.getItem('zaxie.lay')||'auto'; }catch(e){ S.lay='auto'; }
+  applyLay();
+  $('qrurl').textContent=ONLINE_URL;
+  renderLegend();
+  renderChips();
+  renderList();
+  bindEvents();
+  initMap();
+  setTimeout(function(){
+    if(!MAP_OK){ showMapErr(); }
+  }, 12000);
+}
+if(document.readyState==='complete' || document.readyState==='interactive'){ boot(); }
+else{ document.addEventListener('DOMContentLoaded', boot); }
+</script>
+</body>
+</html>
