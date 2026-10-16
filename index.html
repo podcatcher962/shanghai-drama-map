@@ -1,18 +1,72 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-lay="auto">
+<html lang="zh-CN" data-lay="auto" data-th="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>戏梦上海 · 跟着影视剧游上海（取景地打卡指南）</title>
 <script src="https://webapi.amap.com/loader.js"></script>
 <style>
+/* ---------- 主题变量：浅色（默认，阳光奶油系） ---------- */
 :root{
+  --bg:#FFF7EC; --panel:#FFFFFF; --panel2:#FFF6E9; --panel3:#FFEBD6;
+  --line:#F2E2CC; --line2:#E7D0B2; --line3:rgba(231,208,178,.8);
+  --tx:#44301F; --tx2:#7C5C44; --tx3:#A98A6D;
+  --gold:#EE8A22; --gold2:#C24E0B;
+  --t1:#FF8A5C; --t2:#9D7CFF; --t3:#4ECDC4; --t4:#F2C94C;
+  --danger:#D9503F;
+  --topbg:linear-gradient(180deg,#FFFCF6,#FFF1DE);
+  --stagebg:#F3E9DA;
+  --floatbg:rgba(255,255,255,.95);
+  --softbg:rgba(0,0,0,.055);
+  --iwbg:rgba(255,255,255,.985);
+  --errbg:rgba(255,248,238,.95);
+  --maskbg:rgba(78,52,24,.42);
+  --sb:#EBD8BC;
+  --priA:#FFB25C; --priB:#EF8419; --priBd:#EF8419; --priTx:#FFFFFF;
+  --shFloat:0 4px 16px rgba(150,104,52,.20);
+  --shDlg:0 24px 70px rgba(120,80,40,.30);
+  --shIw:0 10px 34px rgba(130,88,42,.22);
+  --shSide:14px 0 44px rgba(150,104,52,.26);
+  --shNum:0 2px 8px rgba(120,80,40,.26), inset 0 0 0 1px rgba(255,255,255,.38);
+  --tipTx:#8A5A16; --tipBg:rgba(240,150,40,.13); --tipBd:rgba(240,150,40,.45);
+  --campTx:#0E7F72; --campBg:rgba(18,181,165,.12); --campBd:rgba(18,181,165,.38);
+  --tagBg:rgba(240,138,34,.12); --tagBd:rgba(240,138,34,.45);
+  --selBg:linear-gradient(90deg,rgba(240,138,34,.16),rgba(240,138,34,.04));
+  --okTx:#0E7F72; --okBd:rgba(18,181,165,.45);
+  --mvTx:#6A45E0; --mvBd:rgba(124,92,255,.45);
+  --sky1:#E7D2B6; --sky2:#EF9D2E;
+  --nameA:#FF5E62; --nameB:#F2820E; --nameSh:0 2px 14px rgba(255,120,40,.30);
+  --pinSh:drop-shadow(0 3px 6px rgba(140,95,45,.35));
+}
+html[data-th="dark"]{
   --bg:#121418; --panel:#1A1D23; --panel2:#21252D; --panel3:#262B34;
-  --line:#2E333C; --line2:#3A414C;
+  --line:#2E333C; --line2:#3A414C; --line3:rgba(46,51,60,.55);
   --tx:#EDEAE4; --tx2:#A8A49B; --tx3:#76726B;
   --gold:#E3B563; --gold2:#F5D48A;
-  --t1:#FF8A5C; --t2:#9D7CFF; --t3:#4ECDC4; --t4:#F2C94C;
   --danger:#E2685F;
+  --topbg:linear-gradient(180deg,#1B1F26,#161920);
+  --stagebg:#0C0E12;
+  --floatbg:rgba(26,29,35,.93);
+  --softbg:rgba(255,255,255,.08);
+  --iwbg:rgba(24,27,33,.97);
+  --errbg:rgba(12,14,18,.92);
+  --maskbg:rgba(8,9,12,.72);
+  --sb:#333944;
+  --priA:#E9C173; --priB:#D9A447; --priBd:#D9A447; --priTx:#1B1C1F;
+  --shFloat:0 4px 16px rgba(0,0,0,.4);
+  --shDlg:0 24px 70px rgba(0,0,0,.6);
+  --shIw:0 10px 34px rgba(0,0,0,.55);
+  --shSide:14px 0 44px rgba(0,0,0,.55);
+  --shNum:0 2px 8px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.22);
+  --tipTx:#D8C9A8; --tipBg:rgba(227,181,99,.08); --tipBd:rgba(227,181,99,.32);
+  --campTx:#CFE8DF; --campBg:rgba(78,205,196,.09); --campBd:rgba(78,205,196,.3);
+  --tagBg:rgba(227,181,99,.08); --tagBd:rgba(227,181,99,.38);
+  --selBg:linear-gradient(90deg,rgba(227,181,99,.13),rgba(227,181,99,.03));
+  --okTx:#9FD9CB; --okBd:rgba(78,205,196,.4);
+  --mvTx:#C9B4F5; --mvBd:rgba(157,124,255,.4);
+  --sky1:#0B0D11; --sky2:#E3B563;
+  --nameA:#F7E3B4; --nameB:#D9A447; --nameSh:0 0 26px rgba(227,181,99,.18);
+  --pinSh:drop-shadow(0 3px 6px rgba(0,0,0,.45));
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;padding:0}
@@ -25,14 +79,14 @@ body{
 button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
 a{color:var(--gold);text-decoration:none}
 ::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-thumb{background:#333944;border-radius:4px}
+::-webkit-scrollbar-thumb{background:var(--sb);border-radius:4px}
 ::-webkit-scrollbar-track{background:transparent}
 
 /* ---------- 顶栏 ---------- */
 #top{
   flex:0 0 auto;height:56px;display:flex;align-items:center;gap:14px;
   padding:0 16px;border-bottom:1px solid var(--line);
-  background:linear-gradient(180deg,#1B1F26,#161920);
+  background:var(--topbg);
   position:relative;z-index:40;
 }
 #top .brand{display:flex;align-items:center;gap:11px;min-width:0}
@@ -47,8 +101,8 @@ a{color:var(--gold);text-decoration:none}
   transition:border-color .15s,background .15s;white-space:nowrap;
 }
 .tbtn:hover{border-color:var(--gold);color:var(--gold2)}
-.tbtn.primary{background:linear-gradient(180deg,#E9C173,#D9A447);color:#1B1C1F;border-color:#D9A447;font-weight:600}
-.tbtn.primary:hover{color:#1B1C1F;filter:brightness(1.07)}
+.tbtn.primary{background:linear-gradient(180deg,var(--priA),var(--priB));color:var(--priTx);border-color:var(--priBd);font-weight:600}
+.tbtn.primary:hover{color:var(--priTx);filter:brightness(1.06)}
 .tbtn svg{width:15px;height:15px;flex:0 0 auto}
 
 /* ---------- 主体 ---------- */
@@ -67,15 +121,15 @@ a{color:var(--gold);text-decoration:none}
 .drama .dname{
   font-family:"STSong","SimSun","Noto Serif SC",Georgia,serif;
   font-size:44px;font-weight:700;letter-spacing:.18em;line-height:1;
-  background:linear-gradient(180deg,#F7E3B4,#D9A447 70%);
+  background:linear-gradient(180deg,var(--nameA),var(--nameB) 70%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 26px rgba(227,181,99,.18);
+  text-shadow:var(--nameSh);
 }
 .drama .den{font-size:11px;color:var(--tx3);letter-spacing:.24em;text-transform:uppercase;padding-bottom:5px}
 .drama .dtags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 9px}
 .drama .dtags span{
-  font-size:11px;color:var(--gold2);border:1px solid rgba(227,181,99,.38);
-  background:rgba(227,181,99,.08);border-radius:99px;padding:2px 9px;letter-spacing:.04em;
+  font-size:11px;color:var(--gold2);border:1px solid var(--tagBd);
+  background:var(--tagBg);border-radius:99px;padding:2px 9px;letter-spacing:.04em;
 }
 .drama .dmeta{font-size:12px;color:var(--tx2);line-height:1.8}
 .drama .dmeta b{color:var(--tx);font-weight:600}
@@ -84,8 +138,8 @@ a{color:var(--gold);text-decoration:none}
   border-left:2px solid var(--gold);padding-left:10px;
 }
 .drama .dcamp{
-  margin-top:11px;font-size:11.5px;color:#CFE8DF;background:rgba(78,205,196,.09);
-  border:1px solid rgba(78,205,196,.3);border-radius:8px;padding:7px 10px;line-height:1.6;
+  margin-top:11px;font-size:11.5px;color:var(--campTx);background:var(--campBg);
+  border:1px solid var(--campBd);border-radius:8px;padding:7px 10px;line-height:1.6;
 }
 .drama .sky{display:block;width:100%;height:64px;margin-top:6px}
 
@@ -114,28 +168,28 @@ a{color:var(--gold);text-decoration:none}
 .grp .gdesc{font-size:10.5px;color:var(--tx3);font-weight:400;margin-left:auto}
 .pt{
   display:flex;gap:11px;padding:11px 16px 12px;cursor:pointer;position:relative;
-  border-bottom:1px solid rgba(46,51,60,.55);transition:background .15s;
+  border-bottom:1px solid var(--line3);transition:background .15s;
 }
 .pt:hover{background:var(--panel2)}
-.pt.on{background:linear-gradient(90deg,rgba(227,181,99,.13),rgba(227,181,99,.03))}
+.pt.on{background:var(--selBg)}
 .pt.on::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold)}
 .pt .num{
   flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
   font-size:13px;font-weight:700;color:#15171B;background:var(--c);
-  box-shadow:0 2px 8px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.22);
+  box-shadow:var(--shNum);
   font-family:Georgia,serif;
 }
 .pt .body{min-width:0;flex:1}
 .pt .nm{font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .pt .nm .src{font-size:10px;font-weight:400;color:var(--tx3);border:1px solid var(--line2);border-radius:4px;padding:0 5px;line-height:16px}
-.pt .nm .src.official{color:#9FD9CB;border-color:rgba(78,205,196,.4)}
-.pt .nm .src.media{color:#C9B4F5;border-color:rgba(157,124,255,.4)}
+.pt .nm .src.official{color:var(--okTx);border-color:var(--okBd)}
+.pt .nm .src.media{color:var(--mvTx);border-color:var(--mvBd)}
 .pt .ad{font-size:11.5px;color:var(--tx3);margin:2px 0 5px;display:flex;align-items:center;gap:5px}
 .pt .ad svg{width:11px;height:11px;flex:0 0 auto;opacity:.75}
 .pt .st{font-size:12px;color:var(--tx2);line-height:1.75}
 .pt .tp{
-  font-size:11.5px;color:#D8C9A8;margin-top:6px;line-height:1.7;
-  background:rgba(227,181,99,.07);border:1px dashed rgba(227,181,99,.3);
+  font-size:11.5px;color:var(--tipTx);margin-top:6px;line-height:1.7;
+  background:var(--tipBg);border:1px dashed var(--tipBd);
   border-radius:7px;padding:5px 9px;display:flex;gap:6px;
 }
 .pt .tp svg{width:12px;height:12px;flex:0 0 auto;margin-top:3px}
@@ -151,33 +205,33 @@ a{color:var(--gold);text-decoration:none}
 .sfoot .fl button:hover{color:var(--gold2)}
 
 /* ---------- 右侧地图 ---------- */
-#stage{flex:1;position:relative;min-width:0;background:#0C0E12}
+#stage{flex:1;position:relative;min-width:0;background:var(--stagebg)}
 #map{position:absolute;inset:0}
 #tools{
   position:absolute;top:14px;right:14px;z-index:15;display:flex;flex-direction:column;gap:8px;align-items:flex-end;
 }
 .mbtn{
-  height:38px;padding:0 14px;border-radius:10px;background:rgba(26,29,35,.92);
+  height:38px;padding:0 14px;border-radius:10px;background:var(--floatbg);
   border:1px solid var(--line2);color:var(--tx);font-size:13px;
   display:inline-flex;align-items:center;gap:7px;backdrop-filter:blur(6px);
-  box-shadow:0 4px 16px rgba(0,0,0,.4);transition:all .15s;white-space:nowrap;
+  box-shadow:var(--shFloat);transition:all .15s;white-space:nowrap;
 }
 .mbtn svg{width:15px;height:15px}
 .mbtn:hover{border-color:var(--gold);color:var(--gold2)}
-.mbtn.on{background:linear-gradient(180deg,#E9C173,#D9A447);color:#1B1C1F;border-color:#D9A447;font-weight:600}
-.mbtn.on:hover{color:#1B1C1F}
+.mbtn.on{background:linear-gradient(180deg,var(--priA),var(--priB));color:var(--priTx);border-color:var(--priBd);font-weight:600}
+.mbtn.on:hover{color:var(--priTx)}
 #legend{
-  position:absolute;left:14px;bottom:14px;z-index:15;background:rgba(26,29,35,.9);
+  position:absolute;left:14px;bottom:14px;z-index:15;background:var(--floatbg);
   border:1px solid var(--line2);border-radius:10px;padding:9px 12px;backdrop-filter:blur(6px);
-  font-size:11.5px;color:var(--tx2);display:flex;flex-direction:column;gap:5px;box-shadow:0 4px 16px rgba(0,0,0,.4);
+  font-size:11.5px;color:var(--tx2);display:flex;flex-direction:column;gap:5px;box-shadow:var(--shFloat);
 }
 #legend .li{display:flex;align-items:center;gap:7px}
 #legend .sw{width:9px;height:9px;border-radius:3px;background:var(--c)}
 #tourpill{
   position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:16;
-  display:none;align-items:center;gap:11px;background:rgba(26,29,35,.94);
+  display:none;align-items:center;gap:11px;background:var(--floatbg);
   border:1px solid var(--gold);border-radius:99px;padding:7px 8px 7px 16px;
-  font-size:13px;color:var(--gold2);box-shadow:0 6px 24px rgba(0,0,0,.5);backdrop-filter:blur(6px);
+  font-size:13px;color:var(--gold2);box-shadow:var(--shFloat);backdrop-filter:blur(6px);
   max-width:min(520px,86%);
 }
 #tourpill .tt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -187,7 +241,7 @@ a{color:var(--gold);text-decoration:none}
 #btnList{display:none}
 #maperr{
   position:absolute;inset:0;z-index:12;display:none;align-items:center;justify-content:center;
-  background:rgba(12,14,18,.92);padding:24px;text-align:center;
+  background:var(--errbg);padding:24px;text-align:center;
 }
 #maperr .box{max-width:420px}
 #maperr h3{color:var(--gold2);font-size:16px;margin:0 0 10px}
@@ -199,13 +253,13 @@ a{color:var(--gold);text-decoration:none}
 #fpcard .iw{width:min(304px,74vw)}
 #modelite{
   position:absolute;top:14px;left:14px;z-index:16;display:none;align-items:center;gap:10px;
-  background:rgba(26,29,35,.94);border:1px solid var(--gold);border-radius:99px;
+  background:var(--floatbg);border:1px solid var(--gold);border-radius:99px;
   padding:6px 8px 6px 14px;font-size:12px;color:var(--tx2);
-  box-shadow:0 6px 24px rgba(0,0,0,.5);backdrop-filter:blur(6px);max-width:min(540px,78%);
+  box-shadow:var(--shFloat);backdrop-filter:blur(6px);max-width:min(540px,78%);
 }
 #modelite b{color:var(--gold2)}
 #modelite .mx{
-  width:22px;height:22px;border-radius:99px;background:rgba(255,255,255,.08);
+  width:22px;height:22px;border-radius:99px;background:var(--softbg);
   color:var(--tx2);font-size:13px;line-height:1;flex:0 0 auto;
 }
 #modelite .mx:hover{background:var(--danger);color:#fff}
@@ -215,13 +269,13 @@ html[data-lay="p"] #fpcard .iw{width:100%}
 /* 信息窗 */
 .iw{
   --c:var(--gold);
-  width:min(304px,74vw);background:rgba(24,27,33,.97);border:1px solid var(--line2);
+  width:min(304px,74vw);background:var(--iwbg);border:1px solid var(--line2);
   border-radius:12px;padding:13px 14px 11px;color:var(--tx);position:relative;
-  box-shadow:0 10px 34px rgba(0,0,0,.55);font-size:12.5px;line-height:1.7;
+  box-shadow:var(--shIw);font-size:12.5px;line-height:1.7;
 }
 .iw::after{
   content:"";position:absolute;left:50%;bottom:-6px;width:11px;height:11px;
-  background:rgba(24,27,33,.97);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);
+  background:var(--iwbg);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);
   transform:translateX(-50%) rotate(45deg);
 }
 .iw .iwh{display:flex;align-items:center;gap:9px;margin-bottom:3px}
@@ -234,15 +288,15 @@ html[data-lay="p"] #fpcard .iw{width:100%}
 .iw .iwa{font-size:11px;color:var(--tx3);margin-bottom:7px}
 .iw .iws{color:var(--tx2);font-size:12px}
 .iw .iwp{
-  margin-top:7px;font-size:11.5px;color:#D8C9A8;background:rgba(227,181,99,.08);
-  border:1px dashed rgba(227,181,99,.32);border-radius:7px;padding:5px 9px;line-height:1.65;
+  margin-top:7px;font-size:11.5px;color:var(--tipTx);background:var(--tipBg);
+  border:1px dashed var(--tipBd);border-radius:7px;padding:5px 9px;line-height:1.65;
 }
 .iw .iwb{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .iw .iwb a,.iw .iwb button{
   font-size:11.5px;height:27px;padding:0 10px;border-radius:7px;display:inline-flex;align-items:center;gap:4px;
   border:1px solid var(--line2);background:var(--panel3);color:var(--tx);
 }
-.iw .iwb a.nav{background:linear-gradient(180deg,#E9C173,#D9A447);color:#1B1C1F;border-color:#D9A447;font-weight:600}
+.iw .iwb a.nav{background:linear-gradient(180deg,var(--priA),var(--priB));color:var(--priTx);border-color:var(--priBd);font-weight:600}
 .iw .iwb a:hover,.iw .iwb button:hover{border-color:var(--gold)}
 .iw .iwx{
   position:absolute;top:6px;right:7px;width:22px;height:22px;border-radius:6px;
@@ -253,22 +307,22 @@ html[data-lay="p"] #fpcard .iw{width:100%}
 /* toast */
 #toast{
   position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(16px);z-index:99;
-  background:rgba(26,29,35,.96);border:1px solid var(--gold);color:var(--gold2);
+  background:var(--floatbg);border:1px solid var(--gold);color:var(--gold2);
   border-radius:99px;padding:8px 18px;font-size:13px;opacity:0;pointer-events:none;
-  transition:opacity .25s,transform .25s;box-shadow:0 8px 28px rgba(0,0,0,.5);max-width:86vw;
+  transition:opacity .25s,transform .25s;box-shadow:var(--shFloat);max-width:86vw;
 }
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ---------- 弹层 ---------- */
 .mask{
-  position:fixed;inset:0;z-index:90;background:rgba(8,9,12,.72);backdrop-filter:blur(3px);
+  position:fixed;inset:0;z-index:90;background:var(--maskbg);backdrop-filter:blur(3px);
   display:none;align-items:center;justify-content:center;padding:20px;
 }
 .mask.on{display:flex}
 .dlg{
   background:var(--panel);border:1px solid var(--line2);border-radius:16px;
   width:min(560px,94vw);max-height:min(86vh,760px);display:flex;flex-direction:column;
-  box-shadow:0 24px 70px rgba(0,0,0,.6);overflow:hidden;
+  box-shadow:var(--shDlg);overflow:hidden;
 }
 .dlg .dh{
   flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:15px 18px;
@@ -290,7 +344,7 @@ html[data-lay="p"] #fpcard .iw{width:100%}
 #mQR .dlg{width:min(430px,94vw)}
 .qrwrap{display:flex;flex-direction:column;align-items:center;gap:14px}
 .qrcard{
-  background:#fff;border-radius:14px;padding:14px;box-shadow:0 10px 34px rgba(0,0,0,.5);
+  background:#fff;border-radius:14px;padding:14px;box-shadow:var(--shIw);
 }
 .qrcard svg{display:block;width:272px;height:272px}
 .qrcap{font-size:12px;color:var(--tx2);text-align:center;line-height:1.8}
@@ -310,7 +364,7 @@ html[data-lay="p"] #fpcard .iw{width:100%}
 
 /* 地图 pin 覆盖物（高德 DOM Marker） */
 .mpin{position:relative;width:30px;height:38px;transform-origin:50% 100%;cursor:pointer}
-.mpin svg{display:block;width:100%;height:100%;filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+.mpin svg{display:block;width:100%;height:100%;filter:var(--pinSh)}
 .mpin.b{width:36px;height:46px;animation:pinpop .3s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pinpop{0%{transform:scale(.55)}70%{transform:scale(1.14)}100%{transform:scale(1)}}
 .mpdot{position:relative;width:20px;height:20px;cursor:pointer}
@@ -327,7 +381,7 @@ html[data-lay="p"] #fpcard .iw{width:100%}
   html:not([data-lay="l"]) #side{
     position:absolute;left:0;top:0;bottom:0;width:min(400px,88%);flex:none;
     transform:translateX(-103%);transition:transform .28s ease;z-index:35;
-    box-shadow:14px 0 44px rgba(0,0,0,.55);border-right:1px solid var(--line2);
+    box-shadow:var(--shSide);border-right:1px solid var(--line2);
   }
   html:not([data-lay="l"]) #side.open{transform:none}
   html:not([data-lay="l"]) #btnList{display:inline-flex}
@@ -345,7 +399,7 @@ html[data-lay="p"] .tbtn{height:32px;padding:0 9px;font-size:12px}
 html[data-lay="p"] #side{
   position:absolute;left:0;top:0;bottom:0;width:min(400px,88%);flex:none;
   transform:translateX(-103%);transition:transform .28s ease;z-index:35;
-  box-shadow:14px 0 44px rgba(0,0,0,.55);border-right:1px solid var(--line2);
+  box-shadow:var(--shSide);border-right:1px solid var(--line2);
 }
 html[data-lay="p"] #side.open{transform:none}
 html[data-lay="p"] #btnList{display:inline-flex}
@@ -376,6 +430,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
     </button>
     <button class="tbtn lt" id="btnHelp">使用说明</button>
     <button class="tbtn" id="btnAbout">关于</button>
+    <button class="tbtn" id="btnTh" title="切换浅色 / 深色主题">☀️ 浅色</button>
     <button class="tbtn" id="btnLay" title="切换版式（自动/手机/桌面）">版式</button>
   </div>
 </div>
@@ -395,7 +450,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
         <p class="dsum">一场民国雪夜剧本杀，让建筑师胡羞与神秘「督军」秦宵一高手过招；戏外重逢才发现，戏里的人近在眼前——房东与租客，总裁与设计师，在戏里戏外的穿梭里双向奔赴。</p>
         <div class="dcamp">上海市文化和旅游局 ×《轧戏》「轧戏 × 上海打卡图鉴」电子打卡活动进行中——本指南据此整理。</div>
         <svg class="sky" viewBox="0 0 400 64" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-          <g fill="#0B0D11">
+          <g style="fill:var(--sky1)">
             <rect x="4" y="40" width="22" height="24"/><rect x="30" y="30" width="15" height="34"/>
             <rect x="49" y="44" width="19" height="20"/><rect x="72" y="34" width="13" height="30"/>
             <rect x="89" y="46" width="24" height="18"/><rect x="117" y="26" width="16" height="38"/>
@@ -411,7 +466,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
             <rect x="341" y="46" width="18" height="18"/><rect x="363" y="38" width="14" height="26"/>
             <rect x="381" y="44" width="15" height="20"/>
           </g>
-          <g fill="#E3B563" opacity=".5">
+          <g style="fill:var(--sky2)" opacity=".5">
             <rect x="9" y="45" width="2.6" height="2.6"/><rect x="15" y="52" width="2.6" height="2.6"/>
             <rect x="34" y="36" width="2.4" height="2.4"/><rect x="40" y="46" width="2.4" height="2.4"/>
             <rect x="76" y="40" width="2.2" height="2.2"/><rect x="121" y="32" width="2.4" height="2.4"/>
@@ -445,7 +500,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
     <div id="map"></div>
 
     <div id="modelite">
-      <span class="mt">免 Key 嵌入模式 · 地图由高德 URI 提供 · <b>配置 Key 解锁巡游/飞线</b></span>
+      <span class="mt">简化地图模式 · 点位浏览与一键导航可用 · <b>巡游 / 飞线动画需完整地图模式</b></span>
       <button class="mx" id="btnMapRefresh" title="重新加载地图">⟳</button>
       <button class="mx" id="btnModelite" title="知道了">×</button>
     </div>
@@ -477,7 +532,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
 
     <div id="maperr"><div class="box">
       <h3>地图组件暂时无法加载</h3>
-      <p>当前配置的高德 Key 未能通过校验或加载超时。请检查 Key 是否正确、服务平台是否为「Web 端（JS API）」、域名白名单是否包含当前域名（免费申请入口：lbs.amap.com）。<br>左侧的点位清单、剧情注解、二维码与导航链接不受影响，均可正常使用。</p>
+      <p>可能是网络波动或地图服务临时不可用，稍后刷新本页重试即可。<br>左侧的点位清单、剧情注解、二维码与导航链接不受影响，均可正常使用。</p>
     </div></div>
   </main>
 </div>
@@ -512,15 +567,15 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
       <h4>筛主题</h4>
       <p>点列表上方的分组徽标（全部 / 落日江岸 / 入戏入口 / 市井弄堂 / 奔赴盛筵），左侧列表与右侧地图同步筛选。</p>
       <h4>巡游模式</h4>
-      <p>地图右上角「巡游模式」：按当前顺序自动飞到每一处点位并弹出讲解，适合先云游一遍全线路；随时点「停止」或按 Esc 结束。<b>（完整交互模式功能，需配置高德 Key，见「关于」）</b></p>
+      <p>地图右上角「巡游模式」：按当前顺序自动飞到每一处点位并弹出讲解，适合先云游一遍全线路；随时点「停止」或按 Esc 结束。<span id="hTourDep"></span></p>
       <h4>飞线动画</h4>
-      <p>「飞线动画」：把当前筛选的点位按顺序连成一条流动的金色飞线，预览路线走向与点位分布。<b>（完整交互模式功能，需配置高德 Key，见「关于」）</b></p>
+      <p>「飞线动画」：把当前筛选的点位按顺序连成一条流动的金色飞线，预览路线走向与点位分布。<span id="hFlyDep"></span></p>
       <h4>存入手机</h4>
       <p>顶栏「存入手机」生成二维码：扫码打开在线版页面（建议在微信里「收藏」或添加到浮窗，出行时随时打开），页面内含全部点位与一键导航，也可把链接分享给同好。</p>
       <h4>坐标说明</h4>
       <p>页面使用高德地图坐标（GCJ-02，与腾讯地图同源，可直接互粘）。个别点位为片区级位置（如园区、桥梁），导航时请以点位名称为准。</p>
       <h4>地图说明</h4>
-      <p>当前为免 Key 嵌入模式：地图由高德 URI 服务提供（11 处点位、缩放拖动、一键导航均可使用）。若地图上出现「移动端」浮层，点其右上角 × 关闭即可；偶发显示登录页时，点左上提示条上的 <b>⟳</b> 重新加载。配置高德 Key 后可启用巡游/飞线动画（方法见「关于」）。</p>
+      <p id="hMapNote">地图由高德地图提供：可缩放、拖动，点击点位看详情。坐标采用 GCJ-02；个别点位为片区级位置（如园区、桥梁），导航时请以点位名称为准。</p>
     </div>
   </div>
 </div>
@@ -545,9 +600,9 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
     <div class="dh">关于<button class="x" data-close>×</button></div>
     <div class="db">
       <p><b>戏梦上海 · 跟着影视剧游上海</b>——4 大主题、11 处真实取景地的打卡指南单页，取景地出自 2026 年热播剧《轧戏》（爱奇艺 · 东方卫视）。</p>
-      <p>地图：高德地图（URI 嵌入 / JS API 2.0，GCJ-02 坐标，底图含审图号）｜ 取景地：上海市文旅局打卡图鉴 + 公开报道 + 网友考证 ｜ 二维码：在线版页面链接。</p>
-      <p>形态：单文件 HTML，可部署为在线版（GitHub Pages 等）。当前为<b>免 Key 嵌入模式</b>：地图由高德 URI 服务提供，11 处点位、缩放拖动、一键导航均可使用；巡游/飞线动画需配置 Key 后启用。</p>
-      <p class="gold">如何启用完整交互模式：前往 lbs.amap.com 免费申请「Web 端（JS API）」Key，然后 ① 浏览器打开本页时在网址后加 <b>?key=你的Key</b>（会记住在本地），或 ② 用文本编辑器打开本文件搜索 <b>AMAP_KEY</b> 填入。配置后巡游、飞线、自定义信息窗自动启用。</p>
+      <p>地图：高德地图（JS API 2.0，GCJ-02 坐标，底图含审图号）｜ 取景地：上海市文旅局打卡图鉴 + 公开报道 + 网友考证 ｜ 二维码：在线版页面链接。</p>
+      <p>形态：单文件 HTML 在线页，用浏览器打开即用，<b>无需任何注册或配置</b>；支持<b>浅色 / 深色</b>两套主题，点顶栏「☀️ 浅色 / 🌙 深色」一键切换（选择会记在本地）。</p>
+      <p class="gold">技术与合规：地图服务由高德地图提供（底图含审图号），坐标采用 GCJ-02；页面为纯静态单文件，不含统计或追踪脚本，也不收集任何位置信息。</p>
       <p class="gold">制作：阿砚 ✒️ ｜ 署名：© 永远的兰兰（Lanlan Eternal）</p>
       <p>版本 v1.0 · 2026-10</p>
     </div>
@@ -600,7 +655,7 @@ var AMAP_KEY = (function(){
 })();
 
 /* ================= 状态 ================= */
-var S={ filter:'all', sel:0, lay:'auto' };
+var S={ filter:'all', sel:0, lay:'auto', th:'light' };
 var TOUR={ on:false, i:0, timer:0 };
 var FLY={ on:false, raf:0, timer:0, last:0 };
 var map=null, markerOf={}, infoWin=null, iwDom=null, dotMk=null;
@@ -688,6 +743,7 @@ function initMapSDK(){
 
       MAP_MODE='sdk';
       MAP_OK=true;
+      setCopyMode('sdk');
       refreshMarkers();
       fitAll();
     }catch(e){
@@ -699,7 +755,7 @@ function initMapSDK(){
     showMapErr();
   });
 }
-function showMapErr(){ $('maperr').style.display='flex'; }
+function showMapErr(){ $('maperr').style.display='flex'; setCopyMode('lite'); }
 
 /* ================= 免 Key 嵌入模式（iframe · 高德 URI 多点页） ================= */
 function pointIdx(id){
@@ -718,6 +774,7 @@ function markersURL(list){
 }
 function initIframe(){
   MAP_MODE='iframe';
+  setCopyMode('lite');
   $('map').style.display='none';
   var f=document.createElement('iframe');
   f.id='amapframe';
@@ -938,7 +995,7 @@ function setFilter(f){
 /* ================= 巡游模式 ================= */
 function tourStart(){
   if(MAP_MODE!=='sdk'){
-    toast('巡游模式属完整交互功能 · 配置高德 Key 后自动启用（见「关于」）');
+    toast('当前为简化地图模式 · 巡游功能暂不可用');
     return;
   }
   var list=curPoints();
@@ -979,7 +1036,7 @@ function lerpLL(a,b,t){
 }
 function flyStart(){
   if(MAP_MODE!=='sdk'){
-    toast('飞线动画属完整交互功能 · 配置高德 Key 后自动启用（见「关于」）');
+    toast('当前为简化地图模式 · 飞线动画暂不可用');
     return;
   }
   var list=curPoints();
@@ -1073,6 +1130,32 @@ function setLay(m){
   toast(m==='auto'?'版式：自动（按屏幕宽度）':(m==='p'?'版式：手机（抽屉式列表）':'版式：桌面（双栏）'));
 }
 
+/* ================= 主题（浅色 / 深色） ================= */
+function applyTheme(){
+  document.documentElement.setAttribute('data-th', S.th);
+  var b=$('btnTh');
+  if(b) b.textContent = (S.th==='dark' ? '🌙 深色' : '☀️ 浅色');
+}
+function setTheme(t){
+  S.th = t;
+  try{ localStorage.setItem('zaxie.th', t); }catch(e){}
+  applyTheme();
+  toast(t==='dark' ? '主题：深色' : '主题：浅色（阳光）');
+}
+
+/* ================= 文案随地图模式自适应 ================= */
+function setCopyMode(mode){
+  var dep = (mode==='sdk') ? '' : '（当前为简化地图模式，此功能暂不可用）';
+  var t=$('hTourDep'); if(t) t.textContent = dep;
+  var f=$('hFlyDep'); if(f) f.textContent = dep;
+  var note=$('hMapNote');
+  if(note){
+    note.innerHTML = (mode==='sdk')
+      ? '地图由高德地图提供：可缩放、拖动，点击点位看详情。坐标采用 GCJ-02；个别点位为片区级位置（如园区、桥梁），导航时请以点位名称为准。'
+      : '地图由高德地图 URI 服务提供：11 处点位、缩放拖动、一键导航均可使用。若地图上出现「移动端」浮层，点其右上角 × 关闭即可；偶发显示登录页时，点提示条上的 <b>⟳</b> 重新加载。';
+  }
+}
+
 /* ================= 事件绑定 ================= */
 function closestAttr(el, attr){
   while(el && el!==document.body){
@@ -1125,6 +1208,8 @@ function bindEvents(){
   $('btnLay').onclick=function(){
     setLay(S.lay==='auto' ? 'p' : (S.lay==='p' ? 'l' : 'auto'));
   };
+  var bt=$('btnTh');
+  if(bt) bt.onclick=function(){ setTheme(S.th==='dark' ? 'light' : 'dark'); };
   $('btnCopyURL').onclick=function(){ copyText(ONLINE_URL, '链接已复制，可粘贴到微信或浏览器打开'); };
   var mlx=$('btnModelite');
   if(mlx) mlx.onclick=function(){ $('modelite').style.display='none'; };
@@ -1145,7 +1230,10 @@ function bindEvents(){
 /* ================= 启动 ================= */
 function boot(){
   try{ S.lay=localStorage.getItem('zaxie.lay')||'auto'; }catch(e){ S.lay='auto'; }
+  try{ S.th=localStorage.getItem('zaxie.th')||'light'; }catch(e){ S.th='light'; }
+  if(S.th!=='dark') S.th='light';
   applyLay();
+  applyTheme();
   $('qrurl').textContent=ONLINE_URL;
   renderLegend();
   renderChips();
