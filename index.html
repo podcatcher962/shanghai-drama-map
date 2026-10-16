@@ -193,6 +193,25 @@ a{color:var(--gold);text-decoration:none}
 #maperr h3{color:var(--gold2);font-size:16px;margin:0 0 10px}
 #maperr p{color:var(--tx2);font-size:13px;line-height:1.9;margin:0}
 
+/* 免 Key 嵌入模式 */
+#amapframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#fpcard{position:absolute;left:14px;bottom:72px;z-index:14;display:none}
+#fpcard .iw{width:min(304px,74vw)}
+#modelite{
+  position:absolute;top:14px;left:14px;z-index:16;display:none;align-items:center;gap:10px;
+  background:rgba(26,29,35,.94);border:1px solid var(--gold);border-radius:99px;
+  padding:6px 8px 6px 14px;font-size:12px;color:var(--tx2);
+  box-shadow:0 6px 24px rgba(0,0,0,.5);backdrop-filter:blur(6px);max-width:min(540px,78%);
+}
+#modelite b{color:var(--gold2)}
+#modelite .mx{
+  width:22px;height:22px;border-radius:99px;background:rgba(255,255,255,.08);
+  color:var(--tx2);font-size:13px;line-height:1;flex:0 0 auto;
+}
+#modelite .mx:hover{background:var(--danger);color:#fff}
+html[data-lay="p"] #fpcard{left:10px;right:10px;bottom:96px}
+html[data-lay="p"] #fpcard .iw{width:100%}
+
 /* 信息窗 */
 .iw{
   --c:var(--gold);
@@ -425,6 +444,13 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
   <main id="stage">
     <div id="map"></div>
 
+    <div id="modelite">
+      <span class="mt">免 Key 嵌入模式 · 地图由高德 URI 提供 · <b>配置 Key 解锁巡游/飞线</b></span>
+      <button class="mx" id="btnModelite" title="知道了">×</button>
+    </div>
+
+    <div id="fpcard"></div>
+
     <div id="tools">
       <button class="mbtn" id="btnTour">
         <svg viewBox="0 0 20 20" fill="none"><path d="M3 11.5a7 7 0 1014 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10 17.5L7.6 14.6h4.8L10 17.5z" fill="currentColor"/><circle cx="10" cy="4.6" r="1.8" fill="currentColor"/></svg>
@@ -450,7 +476,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
 
     <div id="maperr"><div class="box">
       <h3>地图组件暂时无法加载</h3>
-      <p>当前环境未能加载高德地图 JS API。本页地图需要有效的<b>高德地图 Web 端 Key</b>（免费申请入口：lbs.amap.com）。请用文本编辑器打开本文件，搜索 <b>AMAP_KEY</b> 并按注释说明替换为你自己的 Key。<br>左侧的点位清单、剧情注解、二维码与导航链接不受影响，均可正常使用。</p>
+      <p>当前配置的高德 Key 未能通过校验或加载超时。请检查 Key 是否正确、服务平台是否为「Web 端（JS API）」、域名白名单是否包含当前域名（免费申请入口：lbs.amap.com）。<br>左侧的点位清单、剧情注解、二维码与导航链接不受影响，均可正常使用。</p>
     </div></div>
   </main>
 </div>
@@ -485,13 +511,15 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
       <h4>筛主题</h4>
       <p>点列表上方的分组徽标（全部 / 落日江岸 / 入戏入口 / 市井弄堂 / 奔赴盛筵），左侧列表与右侧地图同步筛选。</p>
       <h4>巡游模式</h4>
-      <p>地图右上角「巡游模式」：按当前顺序自动飞到每一处点位并弹出讲解，适合先云游一遍全线路；随时点「停止」或按 Esc 结束。</p>
+      <p>地图右上角「巡游模式」：按当前顺序自动飞到每一处点位并弹出讲解，适合先云游一遍全线路；随时点「停止」或按 Esc 结束。<b>（完整交互模式功能，需配置高德 Key，见「关于」）</b></p>
       <h4>飞线动画</h4>
-      <p>「飞线动画」：把当前筛选的点位按顺序连成一条流动的金色飞线，预览路线走向与点位分布。</p>
+      <p>「飞线动画」：把当前筛选的点位按顺序连成一条流动的金色飞线，预览路线走向与点位分布。<b>（完整交互模式功能，需配置高德 Key，见「关于」）</b></p>
       <h4>存入手机</h4>
       <p>顶栏「存入手机」生成二维码：扫码打开在线版页面（建议在微信里「收藏」或添加到浮窗，出行时随时打开），页面内含全部点位与一键导航，也可把链接分享给同好。</p>
       <h4>坐标说明</h4>
       <p>页面使用高德地图坐标（GCJ-02，与腾讯地图同源，可直接互粘）。个别点位为片区级位置（如园区、桥梁），导航时请以点位名称为准。</p>
+      <h4>地图说明</h4>
+      <p>当前为免 Key 嵌入模式：地图由高德 URI 服务提供（11 处点位、缩放拖动、一键导航均可使用）。若地图上出现「移动端」浮层，点其右上角 × 关闭即可；配置高德 Key 后可启用巡游/飞线动画（方法见「关于」）。</p>
     </div>
   </div>
 </div>
@@ -516,8 +544,9 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
     <div class="dh">关于<button class="x" data-close>×</button></div>
     <div class="db">
       <p><b>跟着电视剧游上海 ·《轧戏》篇</b>——4 大主题、11 处真实取景地的打卡指南单页。</p>
-      <p>地图：高德地图 JS API 2.0（GCJ-02 坐标）｜ 取景地：上海市文旅局打卡图鉴 + 公开报道 + 网友考证 ｜ 二维码：在线版页面链接。</p>
-      <p>形态：单文件 HTML，可部署为在线版（GitHub Pages 等）；地图组件需联网加载并配置高德 Web 端 Key。</p>
+      <p>地图：高德地图（URI 嵌入 / JS API 2.0，GCJ-02 坐标，底图含审图号）｜ 取景地：上海市文旅局打卡图鉴 + 公开报道 + 网友考证 ｜ 二维码：在线版页面链接。</p>
+      <p>形态：单文件 HTML，可部署为在线版（GitHub Pages 等）。当前为<b>免 Key 嵌入模式</b>：地图由高德 URI 服务提供，11 处点位、缩放拖动、一键导航均可使用；巡游/飞线动画需配置 Key 后启用。</p>
+      <p class="gold">如何启用完整交互模式：前往 lbs.amap.com 免费申请「Web 端（JS API）」Key，然后 ① 浏览器打开本页时在网址后加 <b>?key=你的Key</b>（会记住在本地），或 ② 用文本编辑器打开本文件搜索 <b>AMAP_KEY</b> 填入。配置后巡游、飞线、自定义信息窗自动启用。</p>
       <p class="gold">制作：阿砚 ✒️ ｜ 署名：© 永远的兰兰（Lanlan Eternal）</p>
       <p>版本 v1.0 · 2026-10</p>
     </div>
@@ -559,7 +588,14 @@ function ico(name){
    使用前请前往 https://lbs.amap.com/ （高德开放平台）申请「Web 服务」类型 Key（免费），
    将下方字符串替换为你自己的 Key。个人使用可在控制台绑定域名白名单，防止被他人盗用。
    未配置有效 Key 时地图组件无法渲染；左侧列表、二维码与导航链接不受影响。 */
-var AMAP_KEY = "请替换为你在 lbs.amap.com 申请的高德地图 Web 端 Key";
+/* Key 获取优先级：URL 参数 ?key= > localStorage > 空（空 = 免 Key 嵌入模式） */
+var AMAP_KEY = (function(){
+  try{
+    var q = new URLSearchParams(location.search).get('key');
+    if(q){ localStorage.setItem('zaxie.amapkey', q); return q; }
+    return localStorage.getItem('zaxie.amapkey') || '';
+  }catch(e){ return ''; }
+})();
 
 /* ================= 状态 ================= */
 var S={ filter:'all', sel:0, lay:'auto' };
@@ -568,6 +604,8 @@ var FLY={ on:false, raf:0, timer:0, last:0 };
 var map=null, markerOf={}, infoWin=null, iwDom=null, dotMk=null;
 var ghostLine=null, glowLine=null, coreLine=null;
 var MAP_OK=false;
+var MAP_MODE=''; /* 'sdk' 完整模式 | 'iframe' 免 key 嵌入模式 */
+var iframeEl=null;
 var lastMarkerClick=0;
 
 /* ================= 地图 ================= */
@@ -590,6 +628,9 @@ function dotHTML(){
 }
 
 function initMap(){
+  if(AMAP_KEY){ initMapSDK(); } else { initIframe(); }
+}
+function initMapSDK(){
   if(!window.AMapLoader){ showMapErr(); return; }
   var t0=Date.now();
   Promise.race([
@@ -643,6 +684,7 @@ function initMap(){
         closeInfo(); S.sel=0; refreshMarkers(); markListActive(0);
       });
 
+      MAP_MODE='sdk';
       MAP_OK=true;
       refreshMarkers();
       fitAll();
@@ -657,12 +699,51 @@ function initMap(){
 }
 function showMapErr(){ $('maperr').style.display='flex'; }
 
+/* ================= 免 Key 嵌入模式（iframe · 高德 URI 多点页） ================= */
+function pointIdx(id){
+  for(var i=0;i<POINTS.length;i++) if(POINTS[i].id===id) return i;
+  return -1;
+}
+function markersURL(list){
+  var marks=[];
+  for(var i=0;i<list.length;i++){
+    var p=list[i];
+    var nm=String(p.name).replace(/[,|]/g,' ');
+    marks.push(p.lng+','+p.lat+','+encodeURIComponent(nm));
+  }
+  return 'https://uri.amap.com/marker?markers='+marks.join('|')
+    +'&src=zaxie.shanghai&coordinate=gaode&callnative=0';
+}
+function initIframe(){
+  MAP_MODE='iframe';
+  $('map').style.display='none';
+  var f=document.createElement('iframe');
+  f.id='amapframe';
+  f.title='高德地图 · 《轧戏》取景地打卡';
+  f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0;background:#0C0E12';
+  f.src=markersURL(curPoints());
+  f.addEventListener('load', function(){
+    MAP_OK=true;
+    var ml=$('modelite');
+    if(ml) ml.style.display='flex';
+    setTimeout(function(){
+      toast('地图已加载 · 如显示「移动端」浮层，点其右上角 × 关闭即可');
+    }, 500);
+  });
+  $('stage').appendChild(f);
+  iframeEl=f;
+}
+function reloadIframe(){
+  if(MAP_MODE!=='iframe' || !iframeEl) return;
+  iframeEl.src=markersURL(curPoints());
+}
+
 function pointById(id){
   for(var i=0;i<POINTS.length;i++) if(POINTS[i].id===id) return POINTS[i];
   return null;
 }
 function refreshMarkers(){
-  if(!MAP_OK) return;
+  if(MAP_MODE!=='sdk' || !MAP_OK) return;
   var vis={};
   var list=curPoints();
   for(var i=0;i<list.length;i++) vis[list[i].id]=1;
@@ -677,7 +758,7 @@ function refreshMarkers(){
   }
 }
 function clearLines(){
-  if(!MAP_OK) return;
+  if(MAP_MODE!=='sdk' || !MAP_OK || !ghostLine) return;
   ghostLine.setPath([]); glowLine.setPath([]); coreLine.setPath([]);
   if(dotMk) dotMk.setMap(null);
 }
@@ -701,17 +782,31 @@ function infoHTML(p){
     +'</div>'
   +'</div>';
 }
-function openInfo(p){
-  if(!MAP_OK) return;
-  iwDom.innerHTML=infoHTML(p);
-  infoWin.setContent(iwDom);
-  infoWin.open(map, ll(p));
-  bindInfoBtns();
+function openFPCard(p){
+  var el=$('fpcard');
+  if(!el) return;
+  el.innerHTML=infoHTML(p);
+  el.style.display='block';
+  bindInfoBtns(el);
 }
-function closeInfo(){ if(MAP_OK && infoWin) infoWin.close(); }
-function bindInfoBtns(){
-  if(!MAP_OK || !iwDom) return;
-  var els=iwDom.querySelectorAll('[data-act]');
+function openInfo(p){
+  if(MAP_MODE==='sdk'){
+    iwDom.innerHTML=infoHTML(p);
+    infoWin.setContent(iwDom);
+    infoWin.open(map, ll(p));
+    bindInfoBtns(iwDom);
+  } else if(MAP_MODE==='iframe'){
+    openFPCard(p);
+  }
+}
+function closeInfo(){
+  if(MAP_MODE==='sdk' && infoWin) infoWin.close();
+  if(MAP_MODE==='iframe'){ var el=$('fpcard'); if(el) el.style.display='none'; }
+}
+function bindInfoBtns(dom){
+  dom = dom || iwDom;
+  if(!dom) return;
+  var els=dom.querySelectorAll('[data-act]');
   for(var i=0;i<els.length;i++){
     (function(el){
       el.onclick=function(ev){
@@ -732,10 +827,12 @@ function focusPoint(id, opt){
   S.sel=id;
   refreshMarkers();
   markListActive(id);
-  if(MAP_OK){
+  if(MAP_MODE==='sdk' && MAP_OK){
     var z=opt.zoom!==false?(PZOOM[id]||15):map.getZoom();
     map.setZoomAndCenter(z, ll(p), false, 1100);
     openInfo(p);
+  } else if(MAP_MODE==='iframe'){
+    openFPCard(p);
   }
   if(opt.scroll!==false){
     var el=document.querySelector('.pt[data-id="'+id+'"]');
@@ -753,7 +850,12 @@ function isPhoneLay(){
 }
 
 function fitAll(){
-  if(!MAP_OK) return;
+  if(MAP_MODE==='iframe'){
+    reloadIframe();
+    toast('已重载当前 '+curPoints().length+' 处点位');
+    return;
+  }
+  if(MAP_MODE!=='sdk' || !MAP_OK) return;
   var list=curPoints();
   if(!list.length) return;
   var arr=[];
@@ -827,10 +929,15 @@ function setFilter(f){
   S.filter=f;
   tourStop(); flyStop();
   renderChips(); renderList(); refreshMarkers(); clearLines();
+  if(MAP_MODE==='iframe') reloadIframe();
 }
 
 /* ================= 巡游模式 ================= */
 function tourStart(){
+  if(MAP_MODE!=='sdk'){
+    toast('巡游模式属完整交互功能 · 配置高德 Key 后自动启用（见「关于」）');
+    return;
+  }
   var list=curPoints();
   if(list.length<2){ toast('当前分组点位不足，无法巡游'); return; }
   flyStop();
@@ -855,7 +962,7 @@ function tourNext(){
   S.sel=p.id; refreshMarkers(); markListActive(p.id);
   var el=document.querySelector('.pt[data-id="'+p.id+'"]');
   if(el && el.scrollIntoView) el.scrollIntoView({block:'nearest'});
-  if(MAP_OK){
+  if(MAP_MODE==='sdk' && MAP_OK){
     map.setZoomAndCenter(PZOOM[p.id]||15, ll(p), false, 1300);
     openInfo(p);
   }
@@ -868,6 +975,10 @@ function lerpLL(a,b,t){
   return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t];
 }
 function flyStart(){
+  if(MAP_MODE!=='sdk'){
+    toast('飞线动画属完整交互功能 · 配置高德 Key 后自动启用（见「关于」）');
+    return;
+  }
   var list=curPoints();
   if(list.length<2){ toast('当前分组点位不足，无法连线'); return; }
   tourStop();
@@ -996,7 +1107,7 @@ function bindEvents(){
   $('btnFly').onclick=function(){
     if(FLY.on){ flyStop(); return; }
     flyStart();
-    toast('飞线动画：按当前筛选顺序连线'+(S.filter==='all'?'（全部 11 处）':'（'+themeOf(S.filter).name+'）'));
+    if(FLY.on) toast('飞线动画：按当前筛选顺序连线'+(S.filter==='all'?'（全部 11 处）':'（'+themeOf(S.filter).name+'）'));
   };
   $('btnFit').onclick=function(){ fitAll(); };
   $('btnList').onclick=function(){ $('side').classList.toggle('open'); };
@@ -1012,6 +1123,8 @@ function bindEvents(){
     setLay(S.lay==='auto' ? 'p' : (S.lay==='p' ? 'l' : 'auto'));
   };
   $('btnCopyURL').onclick=function(){ copyText(ONLINE_URL, '链接已复制，可粘贴到微信或浏览器打开'); };
+  var mlx=$('btnModelite');
+  if(mlx) mlx.onclick=function(){ $('modelite').style.display='none'; };
 
   var masks=document.querySelectorAll('.mask');
   for(var i=0;i<masks.length;i++){
@@ -1029,9 +1142,11 @@ function boot(){
   renderList();
   bindEvents();
   initMap();
-  setTimeout(function(){
-    if(!MAP_OK){ showMapErr(); }
-  }, 12000);
+  if(AMAP_KEY){
+    setTimeout(function(){
+      if(!MAP_OK){ showMapErr(); }
+    }, 12000);
+  }
 }
 if(document.readyState==='complete' || document.readyState==='interactive'){ boot(); }
 else{ document.addEventListener('DOMContentLoaded', boot); }
