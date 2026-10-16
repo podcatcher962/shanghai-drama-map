@@ -446,6 +446,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
 
     <div id="modelite">
       <span class="mt">免 Key 嵌入模式 · 地图由高德 URI 提供 · <b>配置 Key 解锁巡游/飞线</b></span>
+      <button class="mx" id="btnMapRefresh" title="重新加载地图">⟳</button>
       <button class="mx" id="btnModelite" title="知道了">×</button>
     </div>
 
@@ -519,7 +520,7 @@ html[data-lay="p"] #tourpill{font-size:12px;padding:6px 6px 6px 13px}
       <h4>坐标说明</h4>
       <p>页面使用高德地图坐标（GCJ-02，与腾讯地图同源，可直接互粘）。个别点位为片区级位置（如园区、桥梁），导航时请以点位名称为准。</p>
       <h4>地图说明</h4>
-      <p>当前为免 Key 嵌入模式：地图由高德 URI 服务提供（11 处点位、缩放拖动、一键导航均可使用）。若地图上出现「移动端」浮层，点其右上角 × 关闭即可；配置高德 Key 后可启用巡游/飞线动画（方法见「关于」）。</p>
+      <p>当前为免 Key 嵌入模式：地图由高德 URI 服务提供（11 处点位、缩放拖动、一键导航均可使用）。若地图上出现「移动端」浮层，点其右上角 × 关闭即可；偶发显示登录页时，点左上提示条上的 <b>⟳</b> 重新加载。配置高德 Key 后可启用巡游/飞线动画（方法见「关于」）。</p>
     </div>
   </div>
 </div>
@@ -720,6 +721,7 @@ function initIframe(){
   var f=document.createElement('iframe');
   f.id='amapframe';
   f.title='高德地图 · 《轧戏》取景地打卡';
+  f.setAttribute('referrerpolicy','no-referrer');
   f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0;background:#0C0E12';
   f.src=markersURL(curPoints());
   f.addEventListener('load', function(){
@@ -727,7 +729,7 @@ function initIframe(){
     var ml=$('modelite');
     if(ml) ml.style.display='flex';
     setTimeout(function(){
-      toast('地图已加载 · 如显示「移动端」浮层，点其右上角 × 关闭即可');
+      toast('地图已加载 · 如显示「移动端」浮层点其 ×；偶发登录页可点提示条 ⟳ 重载');
     }, 500);
   });
   $('stage').appendChild(f);
@@ -1125,6 +1127,13 @@ function bindEvents(){
   $('btnCopyURL').onclick=function(){ copyText(ONLINE_URL, '链接已复制，可粘贴到微信或浏览器打开'); };
   var mlx=$('btnModelite');
   if(mlx) mlx.onclick=function(){ $('modelite').style.display='none'; };
+  var mrf=$('btnMapRefresh');
+  if(mrf) mrf.onclick=function(){
+    if(MAP_MODE==='iframe'){
+      reloadIframe();
+      toast('正在重新加载地图…');
+    }
+  };
 
   var masks=document.querySelectorAll('.mask');
   for(var i=0;i<masks.length;i++){
