@@ -586,15 +586,16 @@ function ico(name){
 }
 
 /* ================= 高德 Key 配置 =================
-   使用前请前往 https://lbs.amap.com/ （高德开放平台）申请「Web 服务」类型 Key（免费），
-   将下方字符串替换为你自己的 Key。个人使用可在控制台绑定域名白名单，防止被他人盗用。
-   未配置有效 Key 时地图组件无法渲染；左侧列表、二维码与导航链接不受影响。 */
+   已配置默认 Key（Web 端 JS API 类型，高德开放平台申请，免费）。
+   获取优先级：URL 参数 ?key= > 浏览器 localStorage > 下方默认值。
+   如需更换 Key：编辑本行字符串即可；或访问时带 ?key=你的Key 临时覆盖并记住。
+   建议在控制台为该 Key 绑定域名白名单（https://podcatcher962.github.io）防止盗用。 */
 /* Key 获取优先级：URL 参数 ?key= > localStorage > 空（空 = 免 Key 嵌入模式） */
 var AMAP_KEY = (function(){
   try{
     var q = new URLSearchParams(location.search).get('key');
     if(q){ localStorage.setItem('zaxie.amapkey', q); return q; }
-    return localStorage.getItem('zaxie.amapkey') || '';
+    return localStorage.getItem('zaxie.amapkey') || '9c1a07ac04dc57bb68da6db76824ec88';
   }catch(e){ return ''; }
 })();
 
@@ -663,14 +664,14 @@ function initMapSDK(){
         })(POINTS[i]);
       }
 
-      /* 三条折线：ghost 虚线底 / glow 粗晕 / core 金主线 */
-      ghostLine=new AMap.Polyline({map:map, path:[], zIndex:5,
+      /* 三条折线：ghost 虚线底 / glow 粗晕 / core 金主线（path 不传空数组——高德会报校验错误，清空用 null） */
+      ghostLine=new AMap.Polyline({map:map, zIndex:5,
         strokeColor:'rgba(227,181,99,.28)', strokeWeight:2, strokeOpacity:1,
         strokeStyle:'dashed', strokeDasharray:[2,7], lineCap:'round', lineJoin:'round'});
-      glowLine=new AMap.Polyline({map:map, path:[], zIndex:6,
+      glowLine=new AMap.Polyline({map:map, zIndex:6,
         strokeColor:'#F5C96B', strokeOpacity:.16, strokeWeight:10,
         strokeStyle:'solid', lineCap:'round', lineJoin:'round'});
-      coreLine=new AMap.Polyline({map:map, path:[], zIndex:8,
+      coreLine=new AMap.Polyline({map:map, zIndex:8,
         strokeColor:'#F5C96B', strokeWeight:3, strokeOpacity:1,
         strokeStyle:'solid', lineCap:'round', lineJoin:'round'});
       dotMk=new AMap.Marker({offset:new AMap.Pixel(-10,-10), zIndex:60, content:dotHTML()});
@@ -761,7 +762,7 @@ function refreshMarkers(){
 }
 function clearLines(){
   if(MAP_MODE!=='sdk' || !MAP_OK || !ghostLine) return;
-  ghostLine.setPath([]); glowLine.setPath([]); coreLine.setPath([]);
+  ghostLine.setPath(null); glowLine.setPath(null); coreLine.setPath(null);
   if(dotMk) dotMk.setMap(null);
 }
 
